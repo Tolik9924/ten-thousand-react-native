@@ -77,20 +77,6 @@ class AuthService {
     return parsed.refreshToken;
   }
 
-  // 🔑 SAVE PIN CODE
-  async savePin(pin: string) {
-    await Keychain.setInternetCredentials("pin_code", "user", pin, {
-      accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED,
-    });
-  }
-
-  // 🔍 GET PIN
-  async getPin(): Promise<string | null> {
-    const credentials = await Keychain.getInternetCredentials("pin_code");
-    if (!credentials) return null;
-    return credentials.password;
-  }
-
   // 🧠 CHECK BIOMETRIC SUPPORT
   async isBiometricAvailable() {
     const biometryType = await Keychain.getSupportedBiometryType();

@@ -7,3 +7,11 @@ export const savePin = async (pin: string) => {
 export const getPin = async () => {
   return await SecureStore.getItemAsync("user_pin");
 };
+
+export const deletePin = async () => {
+  try {
+    await SecureStore.deleteItemAsync("user_pin");
+  } catch (error) {
+    console.error("Failed to delete PIN:", error);
+  }
+};

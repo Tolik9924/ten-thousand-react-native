@@ -1,3 +1,4 @@
+import { deletePin } from "@/src/services/storage";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -13,15 +14,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { RootState } from "../../redux/store";
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }: any) {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const [name, setName] = useState(user.name || "");
   const [photo, setPhoto] = useState(user.photo || "");
   const { t, i18n } = useTranslation();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
+    await deletePin();
+    navigation.replace("AuthStack");
   };
 
   const pickImage = async () => {

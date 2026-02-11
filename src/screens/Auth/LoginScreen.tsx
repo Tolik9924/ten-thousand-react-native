@@ -4,7 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import { Alert, Button, Text, TextInput, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slices/authSlice";
-import { savePin } from "../../services/storage";
 
 interface FormData {
   username: string;
@@ -25,13 +24,8 @@ export default function LoginScreen({ navigation }: any) {
         password: data.password,
       });
       dispatch(loginSuccess(res.data.token));
-
-      // Створюємо пін код
-      await savePin("1234"); // для тесту, в реалі юзер вводить сам
-
-      navigation.replace("PinCode");
+      navigation.replace("CreatePin");
     } catch (error) {
-      console.log("ERROR: ", error);
       Alert.alert("Login failed", "Invalid credentials: ");
     }
   };

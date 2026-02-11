@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import CreatePinScreen from "../screens/Auth/CreatePinScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import PinCodeScreen from "../screens/Auth/PinCodeScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
@@ -11,6 +12,7 @@ export default function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="CreatePin" component={CreatePinScreen} />
       <Stack.Screen name="PinCode" component={PinCodeScreen} />
     </Stack.Navigator>
   );
