@@ -67,10 +67,6 @@ export default function LoginScreen({ navigation }: any) {
       />
 
       <Button title="Login" onPress={handleSubmit(onSubmit)} />
-      <Button
-        title="Register"
-        onPress={() => navigation.navigate("Register")}
-      />
     </View>
   );
 }
