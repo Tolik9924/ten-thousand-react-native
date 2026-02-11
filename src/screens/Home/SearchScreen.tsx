@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
+import SplashScreen from "../Splash/SplashScreen";
 
 export default function SearchScreen({ navigation }: any) {
   const [query, setQuery] = useState("");
@@ -23,7 +23,7 @@ export default function SearchScreen({ navigation }: any) {
     gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
   });
 
-  if (isLoading) return <ActivityIndicator style={{ flex: 1 }} size="large" />;
+  if (isLoading) return <SplashScreen />;
   if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
   const filteredPosts = data?.filter((post: any) =>

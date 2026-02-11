@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { ActivityIndicator, ScrollView, Text } from "react-native";
+import { ScrollView, Text } from "react-native";
+import SplashScreen from "../Splash/SplashScreen";
 
 export default function PostScreen({ route }: any) {
   const { postId } = route.params;
@@ -18,7 +19,7 @@ export default function PostScreen({ route }: any) {
     gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
   });
 
-  if (isLoading) return <ActivityIndicator style={{ flex: 1 }} size="large" />;
+  if (isLoading) return <SplashScreen />;
   if (isError) return <Text style={{ padding: 20 }}>Error loading post</Text>;
 
   return (

@@ -1,16 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import {
-  ActivityIndicator,
-  Button,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Button, FlatList, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import SplashScreen from "../Splash/SplashScreen";
 
 export default function HomeScreen({ navigation }: any) {
   const user = useSelector((state: RootState) => state.user);
@@ -27,7 +21,7 @@ export default function HomeScreen({ navigation }: any) {
     gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
   });
 
-  if (isLoading) return <ActivityIndicator style={{ flex: 1 }} size="large" />;
+  if (isLoading) return <SplashScreen />;
   if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
   return (
