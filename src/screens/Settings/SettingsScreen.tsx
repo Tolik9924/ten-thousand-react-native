@@ -1,24 +1,14 @@
 import { deletePin } from "@/src/services/storage";
-import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Button,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Button, Image, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { RootState } from "../../redux/store";
 
 export default function SettingsScreen({ navigation }: any) {
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
-  const [name, setName] = useState(user.name || "");
-  const [photo, setPhoto] = useState(user.photo || "");
+  const { name, photo } = useSelector((state: RootState) => state.user);
   const { t, i18n } = useTranslation();
 
   const handleLogout = async () => {
@@ -27,13 +17,13 @@ export default function SettingsScreen({ navigation }: any) {
     navigation.replace("AuthStack");
   };
 
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.5,
-    });
-    if (!result.canceled) setPhoto(result.assets[0].uri);
-  };
+  // const pickImage = async () => {
+  //   const result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     quality: 0.5,
+  //   });
+  //   if (!result.canceled) setPhoto(result.assets[0].uri);
+  // };
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -43,7 +33,7 @@ export default function SettingsScreen({ navigation }: any) {
     <View style={{ flex: 1, padding: 20 }}>
       <Text style={{ fontSize: 20, marginBottom: 10 }}>{t("settings")}</Text>
 
-      <TouchableOpacity onPress={pickImage}>
+      <View>
         {photo ? (
           <Image
             source={{ uri: photo }}
@@ -59,18 +49,20 @@ export default function SettingsScreen({ navigation }: any) {
               justifyContent: "center",
               alignItems: "center",
             }}
-          >
-            <Text>{t("addPhoto")}</Text>
-          </View>
+          />
         )}
-      </TouchableOpacity>
+      </View>
 
-      <TextInput
+      {/* <TextInput
         placeholder={t("name")}
         value={name}
         onChangeText={setName}
         style={{ borderWidth: 1, padding: 10, marginVertical: 10 }}
-      />
+      /> */}
+
+      <View>
+        <Text>{name}</Text>
+      </View>
 
       <Text>{t("language")}</Text>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>

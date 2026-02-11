@@ -1,3 +1,4 @@
+import { setName } from "@/src/redux/slices/userSlice";
 import axios from "axios";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -23,7 +24,9 @@ export default function LoginScreen({ navigation }: any) {
         username: data.username,
         password: data.password,
       });
+      const username = `${res.data.firstName} ${res.data.lastName}`;
       dispatch(loginSuccess(res.data.token));
+      dispatch(setName(username));
       navigation.replace("CreatePin");
     } catch (error) {
       Alert.alert("Login failed", "Invalid credentials: ");
