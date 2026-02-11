@@ -11,6 +11,9 @@ interface FormData {
   password: string;
 }
 
+// name emilys
+// password emilyspass
+
 export default function LoginScreen({ navigation }: any) {
   const { control, handleSubmit } = useForm<FormData>();
   const dispatch = useDispatch();
@@ -27,8 +30,9 @@ export default function LoginScreen({ navigation }: any) {
       await savePin("1234"); // для тесту, в реалі юзер вводить сам
 
       navigation.replace("PinCode");
-    } catch (e) {
-      Alert.alert("Login failed", "Invalid credentials");
+    } catch (error) {
+      console.log("ERROR: ", error);
+      Alert.alert("Login failed", "Invalid credentials: ");
     }
   };
 

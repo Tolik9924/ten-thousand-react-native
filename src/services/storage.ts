@@ -1,13 +1,9 @@
-import * as Keychain from "react-native-keychain";
+import * as SecureStore from "expo-secure-store";
 
 export const savePin = async (pin: string) => {
-  await Keychain.setGenericPassword("pin", pin, {
-    accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED,
-  });
+  await SecureStore.setItemAsync("user_pin", pin);
 };
 
 export const getPin = async () => {
-  const credentials = await Keychain.getGenericPassword();
-  if (credentials) return credentials.password;
-  return null;
+  return await SecureStore.getItemAsync("user_pin");
 };
