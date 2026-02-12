@@ -2,10 +2,14 @@ import { BottomMenu } from "@/src/components/BottomMenu/BottomMenu";
 import { deletePin } from "@/src/services/storage";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Image, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { RootState } from "../../redux/store";
+
+import { Button } from "@/src/components/Button/Button";
+import { Link } from "@/src/components/Link/Link";
+import { styles } from "./SettingsScreen.styles";
 
 export default function SettingsScreen({ navigation }: any) {
   const dispatch = useDispatch();
@@ -23,41 +27,44 @@ export default function SettingsScreen({ navigation }: any) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: 20, marginBottom: 10 }}>{t("settings")}</Text>
+    <View style={styles.page}>
+      <View style={styles.personInfo}>
+        <View style={styles.personInfo}>
+          {photo ? (
+            <Image
+              source={{ uri: photo }}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+            />
+          ) : (
+            <View
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+                backgroundColor: "#ccc",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            />
+          )}
+        </View>
 
-      <View>
-        {photo ? (
-          <Image
-            source={{ uri: photo }}
-            style={{ width: 100, height: 100, borderRadius: 50 }}
-          />
-        ) : (
-          <View
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 50,
-              backgroundColor: "#ccc",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          />
-        )}
+        <View>
+          <Text style={styles.name}>{name}</Text>
+        </View>
       </View>
 
-      <View>
-        <Text>{name}</Text>
+      <View style={styles.languages}>
+        <Text style={styles.languagesTitle}>{t("language")}: </Text>
+        <View style={styles.changeLanguage}>
+          <Link text="EN" navigate={() => changeLanguage("en")} />
+          <Link text="AR" navigate={() => changeLanguage("ar")} />
+        </View>
       </View>
 
-      <Text>{t("language")}</Text>
-      <View style={{ flexDirection: "row", marginVertical: 10 }}>
-        <Button title="EN" onPress={() => changeLanguage("en")} />
-        <View style={{ width: 10 }} />
-        <Button title="AR" onPress={() => changeLanguage("ar")} />
+      <View style={styles.buttonContainer}>
+        <Button title={t("logout")} onPress={handleLogout} />
       </View>
-
-      <Button title={t("logout")} color="red" onPress={handleLogout} />
       <BottomMenu />
     </View>
   );

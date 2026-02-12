@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View } from "react-native";
 
+import { useTranslation } from "react-i18next";
 import { styles } from "./BottomMenu.styles";
 
 const MENU = [
@@ -35,6 +36,8 @@ export const BottomMenu = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
 
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container}>
       {MENU.map((item) => (
@@ -54,7 +57,7 @@ export const BottomMenu = () => {
               route.name === item.navigate && styles.routeText,
             ]}
           >
-            {item.name}
+            {t(item.name)}
           </Text>
         </TouchableOpacity>
       ))}
