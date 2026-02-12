@@ -1,7 +1,7 @@
 import * as LocalAuthentication from "expo-local-authentication";
 import React, { useEffect } from "react";
 import { Alert, Button, Text, TextInput, View } from "react-native";
-import { getPin } from "../../services/storage";
+import { getPin } from "../../../services/storage";
 
 export default function PinCodeScreen({ navigation }: any) {
   const [inputPin, setInputPin] = React.useState("");

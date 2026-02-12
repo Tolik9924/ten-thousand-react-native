@@ -15,8 +15,20 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 5,
     height: 56,
   },
+  labelsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   label: {
     color: "#606773",
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: 24,
+    paddingHorizontal: 10,
+  },
+  labelForgot: {
+    color: "#FA8A34",
     fontWeight: 400,
     fontSize: 15,
     lineHeight: 24,

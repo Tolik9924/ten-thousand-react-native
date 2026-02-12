@@ -16,6 +16,7 @@ interface CustomInputProps extends TextInputProps {
   label?: string;
   error?: string;
   secureText?: boolean;
+  isErrorText?: boolean;
 }
 
 const Input: React.FC<CustomInputProps> = ({
@@ -24,6 +25,7 @@ const Input: React.FC<CustomInputProps> = ({
   label,
   error,
   secureText,
+  isErrorText = true,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -35,7 +37,10 @@ const Input: React.FC<CustomInputProps> = ({
 
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      <View style={styles.labelsContainer}>
+        {label && <Text style={styles.label}>{label}</Text>}
+        {error && secureText && <Text style={styles.labelForgot}>Forgot?</Text>}
+      </View>
       <View
         style={[
           styles.inputContainer,
@@ -60,13 +65,21 @@ const Input: React.FC<CustomInputProps> = ({
             <Ionicons
               name={isPasswordVisible ? "eye-off" : "eye"}
               size={24}
-              color="#00A36D"
+              color={error ? "#D63C41" : "#00A36D"}
             />
+          </TouchableOpacity>
+        )}
+        {error && (
+          <TouchableOpacity
+            style={styles.showPassword}
+            onPress={togglePasswordVisibility}
+          >
+            <Ionicons name="information-circle" size={24} color="#D63C41" />
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.errorContainer}>
-        {error && <Text style={styles.error}>{error}</Text>}
+        {isErrorText && <Text style={styles.error}>{error}</Text>}
       </View>
     </View>
   );
