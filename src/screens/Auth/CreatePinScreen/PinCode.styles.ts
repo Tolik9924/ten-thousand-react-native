@@ -1,17 +1,69 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  page: {
+    height: "100%",
+    width: "100%",
+    paddingBottom: 25,
+    boxSizing: "border-box",
+  },
   container: {
     flex: 1,
+    marginTop: 80,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  infoContainer: {
+    alignItems: "center",
+  },
+  titleSvg: {
+    width: 48,
+    height: 48,
+    borderRadius: 50,
+    backgroundColor: "#F2FAF7",
+    borderWidth: 1,
+    borderColor: "#E9F7F2",
+    display: "flex",
     justifyContent: "center",
-    paddingHorizontal: 30,
-    backgroundColor: "#fff",
+    alignItems: "center",
+  },
+  titleContainer: {
+    width: "100%",
+    alignItems: "center",
+    gap: 5,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 40,
+    fontSize: 15,
+    lineHeight: 24,
+    fontWeight: 500,
+    marginBottom: 30,
     textAlign: "center",
+  },
+  pinCodeContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+  },
+  keyboardContainer: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+  },
+  keyboard: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    boxSizing: "border-box",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "#D9D9D9",
+    width: "100%",
+  },
+  explainText: {
+    fontWeight: 400,
+    fontSize: 15,
+    color: "#606773",
+    lineHeight: 16,
   },
   input: {
     borderWidth: 1,
@@ -23,14 +75,8 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   button: {
-    backgroundColor: "#4a90e2",
-    paddingVertical: 15,
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 18,
+    width: "100%",
+    padding: 15,
+    boxSizing: "border-box",
   },
 });
