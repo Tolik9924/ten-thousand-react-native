@@ -52,7 +52,7 @@ export default function CreatePinScreen({ navigation }: any) {
                 color="#00A36D"
               />
             </View>
-            <Text style={styles.title}>Create a pin code</Text>
+            <Text style={styles.title}>Repeat a Pin code</Text>
           </View>
           <View style={styles.pinCodeContainer}>
             <Text style={styles.explainText}>enter 5 digit code: </Text>
