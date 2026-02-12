@@ -38,10 +38,4 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 20,
   },
-  textLink: {
-    fontSize: 15,
-    lineHeight: 24,
-    color: "#FA8A34",
-    fontWeight: 600,
-  },
 });

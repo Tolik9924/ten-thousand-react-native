@@ -1,7 +1,8 @@
 import { LogoSVG } from "@/assets/LogoSvg";
 import { Button } from "@/src/components/Button/Button";
 import { InfoContainer } from "@/src/components/InfoContainer/InfoContainer";
-import { Text, View } from "react-native";
+import { Link } from "@/src/components/Link/Link";
+import { View } from "react-native";
 import { styles } from "./AuthScreen.styles";
 
 const AuthScreen = ({ navigation }: any) => {
@@ -22,12 +23,7 @@ const AuthScreen = ({ navigation }: any) => {
         </View>
       </View>
       <View style={styles.linksContainer}>
-        <Text
-          style={styles.textLink}
-          onPress={() => navigation.navigate("Login")}
-        >
-          Sign in
-        </Text>
+        <Link text="Sign in" navigate={() => navigation.navigate("Login")} />
         <Button
           title="Sign up"
           onPress={() => navigation.navigate("Register")}

@@ -4,7 +4,7 @@ import AuthScreen from "../screens/Auth/AuthScreen/AuthScreen";
 import CreatePinScreen from "../screens/Auth/CreatePinScreen";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import PinCodeScreen from "../screens/Auth/PinCodeScreen";
-import RegisterScreen from "../screens/Auth/RegisterScreen";
+import RegisterScreen from "../screens/Auth/RegisterScreen/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 
