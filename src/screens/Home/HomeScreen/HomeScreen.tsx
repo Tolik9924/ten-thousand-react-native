@@ -2,7 +2,7 @@ import { BottomMenu } from "@/src/components/BottomMenu/BottomMenu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { Button, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import SplashScreen from "../../Splash/SplashScreen";
@@ -38,57 +38,55 @@ export default function HomeScreen({ navigation }: any) {
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         <View style={styles.container}>
-          <Text style={{ fontSize: 24, marginBottom: 10 }}>
-            Hello, {user.name || "User"}!
-          </Text>
-
-          <Text style={{ fontSize: 18, marginVertical: 10 }}>
-            Personal Advisor
-          </Text>
-          <View
-            style={{ height: 50, backgroundColor: "#eee", marginBottom: 20 }}
-          />
-
-          <Text style={{ fontSize: 18, marginVertical: 10 }}>
-            Before you Start
-          </Text>
-          <View
-            style={{ height: 50, backgroundColor: "#eee", marginBottom: 20 }}
-          />
-
-          <Text style={{ fontSize: 18, marginBottom: 10 }}>Posts</Text>
-          <View>
-            {data.map((item: List) => (
-              <View key={item.id}>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("PostScreen", { postId: item.id })
-                  }
-                >
-                  <View
-                    style={{
-                      borderWidth: 1,
-                      padding: 10,
-                      marginBottom: 10,
-                      borderRadius: 8,
-                    }}
-                  >
-                    <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
-                    <Text numberOfLines={2}>{item.body}</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            ))}
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.welcomeText}>
+              Hello, {user.name || "User"}!
+            </Text>
           </View>
 
-          <Button
-            title="Go to Search"
-            onPress={() => navigation.navigate("Search")}
-          />
-          <Button
-            title="Settings"
-            onPress={() => navigation.navigate("Settings")}
-          />
+          <View style={styles.personalAdvisorContainer}>
+            <View style={styles.advice}>
+              <Text style={styles.adviceTitle}>Personal Advisor</Text>
+              <Text style={styles.adviceExplanation}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industrys standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen book.
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.personalAdvisorContainer}>
+            <View style={styles.advice}>
+              <Text style={styles.adviceTitle}>Before you start</Text>
+              <Text style={styles.adviceExplanation}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industrys standard dummy text
+                ever since the 1500s, when an unknown printer took a galley of
+                type and scrambled it to make a type specimen book.
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.postsContainer}>
+            <Text style={styles.postsTitle}>Posts</Text>
+            <View>
+              {data.map((item: List) => (
+                <View key={item.id}>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate("PostScreen", { postId: item.id })
+                    }
+                  >
+                    <View style={styles.post}>
+                      <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
+                      <Text numberOfLines={2}>{item.body}</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </View>
         </View>
       </ScrollView>
       <BottomMenu />

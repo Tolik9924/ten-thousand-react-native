@@ -1,3 +1,4 @@
+import { BottomMenu } from "@/src/components/BottomMenu/BottomMenu";
 import { deletePin } from "@/src/services/storage";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -17,20 +18,12 @@ export default function SettingsScreen({ navigation }: any) {
     navigation.replace("AuthStack");
   };
 
-  // const pickImage = async () => {
-  //   const result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     quality: 0.5,
-  //   });
-  //   if (!result.canceled) setPhoto(result.assets[0].uri);
-  // };
-
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1 }}>
       <Text style={{ fontSize: 20, marginBottom: 10 }}>{t("settings")}</Text>
 
       <View>
@@ -53,13 +46,6 @@ export default function SettingsScreen({ navigation }: any) {
         )}
       </View>
 
-      {/* <TextInput
-        placeholder={t("name")}
-        value={name}
-        onChangeText={setName}
-        style={{ borderWidth: 1, padding: 10, marginVertical: 10 }}
-      /> */}
-
       <View>
         <Text>{name}</Text>
       </View>
@@ -72,6 +58,7 @@ export default function SettingsScreen({ navigation }: any) {
       </View>
 
       <Button title={t("logout")} color="red" onPress={handleLogout} />
+      <BottomMenu />
     </View>
   );
 }

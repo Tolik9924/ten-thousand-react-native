@@ -1,3 +1,4 @@
+import { BottomMenu } from "@/src/components/BottomMenu/BottomMenu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useState } from "react";
@@ -31,7 +32,7 @@ export default function SearchScreen({ navigation }: any) {
   );
 
   return (
-    <View style={{ flex: 1, padding: 20 }}>
+    <View style={{ flex: 1 }}>
       <TextInput
         placeholder="Search posts..."
         value={query}
@@ -62,6 +63,7 @@ export default function SearchScreen({ navigation }: any) {
           </TouchableOpacity>
         )}
       />
+      <BottomMenu />
     </View>
   );
 }

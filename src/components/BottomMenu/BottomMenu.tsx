@@ -12,11 +12,6 @@ const MENU = [
     navigate: "Home",
   },
   {
-    iconName: "briefcase",
-    name: "Portfolio",
-    navigate: "Home",
-  },
-  {
     iconName: "search",
     name: "Search",
     navigate: "Search",
@@ -40,8 +35,6 @@ export const BottomMenu = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute();
 
-  console.log("ROUTE: ", route);
-
   return (
     <View style={styles.container}>
       {MENU.map((item) => (
@@ -53,12 +46,12 @@ export const BottomMenu = () => {
           <Ionicons
             name={item.iconName}
             size={28}
-            color={item.name === route.name ? "#FA8A34" : "#858C94"}
+            color={item.navigate === route.name ? "#FA8A34" : "#858C94"}
           />
           <Text
             style={[
               styles.menuText,
-              route.name === item.name && styles.routeText,
+              route.name === item.navigate && styles.routeText,
             ]}
           >
             {item.name}

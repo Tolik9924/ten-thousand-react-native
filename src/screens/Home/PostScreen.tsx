@@ -23,7 +23,7 @@ export default function PostScreen({ route }: any) {
   if (isError) return <Text style={{ padding: 20 }}>Error loading post</Text>;
 
   return (
-    <ScrollView style={{ flex: 1, padding: 20 }}>
+    <ScrollView style={{ flex: 1 }}>
       <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 10 }}>
         {data.title}
       </Text>
