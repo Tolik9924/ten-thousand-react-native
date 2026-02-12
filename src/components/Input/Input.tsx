@@ -12,7 +12,7 @@ import { styles } from "./Input.styles";
 
 interface CustomInputProps extends TextInputProps {
   value: string;
-  onChangeText: () => void;
+  onChangeText: (text: string) => void;
   label?: string;
   error?: string;
   secureText?: boolean;
