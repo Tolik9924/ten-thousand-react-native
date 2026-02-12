@@ -1,10 +1,20 @@
 import { BackNavigate } from "@/src/components/BackNavigate/BackNavigate";
+import { Button } from "@/src/components/Button/Button";
+import Input from "@/src/components/Input/Input";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Alert, Button, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { validatePassword } from "../../../utils/validation";
-import { styles } from "./Register.styles";
+import { styles } from "./RegisterScreen.styles";
 
 interface FormData {
   name: string;
@@ -13,6 +23,7 @@ interface FormData {
 }
 
 export default function RegisterScreen({ navigation }: any) {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const {
     control,
     handleSubmit,
@@ -24,10 +35,24 @@ export default function RegisterScreen({ navigation }: any) {
     navigation.navigate("Login");
   };
 
-  return (
-    <View style={styles.page}>
-      <BackNavigate />
+  useEffect(() => {
+    const showSub = Keyboard.addListener("keyboardDidShow", (e) => {
+      setKeyboardHeight(e.endCoordinates.height);
+    });
 
+    const hideSub = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardHeight(0);
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
+  return (
+    <View>
+      <BackNavigate />
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.userContainer}>
@@ -39,79 +64,82 @@ export default function RegisterScreen({ navigation }: any) {
           </View>
         </View>
 
-        <View style={styles.formContainer}>
-          <Text>Name</Text>
-          <View style={styles.formItem}>
-            <Controller
-              control={control}
-              name="name"
-              rules={{ required: "Name is required" }}
-              render={({ field: { onChange, value } }) => (
-                <TextInput
-                  placeholder="Name"
-                  value={value}
-                  onChangeText={onChange}
-                  style={{ borderWidth: 1, marginVertical: 5, padding: 10 }}
-                />
-              )}
-            />
-            {errors.name && (
-              <Text style={{ color: "red" }}>{errors.name.message}</Text>
-            )}
-          </View>
+        <KeyboardAvoidingView
+          style={styles.scrollAvoidContainer}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={0}
+        >
+          <ScrollView keyboardShouldPersistTaps="handled">
+            <View style={styles.formContainer}>
+              <View style={styles.formItems}>
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    name="name"
+                    rules={{ required: "Name is required" }}
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Name"
+                        value={value}
+                        placeholder="Name"
+                        onChangeText={onChange}
+                        error={errors.name && errors.name.message}
+                      />
+                    )}
+                  />
+                </View>
 
-          <View style={styles.formItem}>
-            <Text>E-mail</Text>
-            <Controller
-              control={control}
-              name="email"
-              rules={{
-                required: "Email required",
-                pattern: { value: /^\S+@\S+$/i, message: "Invalid email" },
-              }}
-              render={({ field: { onChange, value } }) => (
-                <TextInput
-                  placeholder="Email"
-                  value={value}
-                  onChangeText={onChange}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  style={{ borderWidth: 1, marginVertical: 5, padding: 10 }}
-                />
-              )}
-            />
-            {errors.email && (
-              <Text style={{ color: "red" }}>{errors.email.message}</Text>
-            )}
-          </View>
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    name="email"
+                    rules={{
+                      required: "Email required",
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: "Invalid email",
+                      },
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="E-mail"
+                        placeholder="E-mail"
+                        value={value}
+                        onChangeText={onChange}
+                        error={errors.email && errors.email.message}
+                      />
+                    )}
+                  />
+                </View>
 
-          <View style={styles.formItem}>
-            <Text>Password</Text>
-            <Controller
-              control={control}
-              name="password"
-              rules={{
-                required: "Password required",
-                validate: (value) =>
-                  validatePassword(value) ||
-                  "Password must be 8-64 chars, include upper/lower/special",
-              }}
-              render={({ field: { onChange, value } }) => (
-                <TextInput
-                  placeholder="Password"
-                  value={value}
-                  onChangeText={onChange}
-                  secureTextEntry
-                  style={{ borderWidth: 1, marginVertical: 5, padding: 10 }}
-                />
-              )}
-            />
-            {errors.password && (
-              <Text style={{ color: "red" }}>{errors.password.message}</Text>
-            )}
-          </View>
-
-          <Button title="Register" onPress={handleSubmit(onSubmit)} />
+                <View style={styles.formItem}>
+                  <Controller
+                    control={control}
+                    name="password"
+                    rules={{
+                      required: "Password required",
+                      validate: (value) =>
+                        validatePassword(value) ||
+                        "Password must be 8-64 chars, include upper/lower/special",
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <Input
+                        label="Password"
+                        placeholder="Password"
+                        value={value}
+                        onChangeText={onChange}
+                        error={errors.password && errors.password.message}
+                        secureText={true}
+                      />
+                    )}
+                  />
+                </View>
+              </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+        <View style={[styles.submitButton, { bottom: keyboardHeight + 120 }]}>
+          <Button title="Continue" onPress={handleSubmit(onSubmit)} />
         </View>
       </View>
     </View>

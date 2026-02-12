@@ -5,5 +5,6 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 50,
     left: 10,
+    zIndex: 1000,
   },
 });

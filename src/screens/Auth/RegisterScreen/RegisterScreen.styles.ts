@@ -1,16 +1,15 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  page: {},
   chevronBack: {
     position: "absolute",
     top: 50,
     left: 10,
   },
   container: {
-    marginTop: 150,
+    marginTop: 100,
     backgroundColor: "#fff",
-    height: "80%",
+    height: "95%",
     width: "100%",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -53,9 +52,29 @@ export const styles = StyleSheet.create({
   formContainer: {
     padding: 20,
     boxSizing: "border-box",
+    height: 550,
+  },
+  scrollAvoidContainer: {
+    flex: 1,
+  },
+  formItems: {
+    display: "flex",
+    gap: 15,
   },
   formItem: {
     display: "flex",
     gap: 5,
+  },
+  nameItem: {
+    color: "#606773",
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: 24,
+  },
+  submitButton: {
+    width: "100%",
+    position: "absolute",
+    padding: 20,
+    boxSizing: "border-box",
   },
 });
