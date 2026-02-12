@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import HomeScreen from "../screens/Home/HomeScreen";
+import HomeScreen from "../screens/Home/HomeScreen/HomeScreen";
 import PostScreen from "../screens/Home/PostScreen";
 import SearchScreen from "../screens/Home/SearchScreen";
 import SettingsScreen from "../screens/Settings/SettingsScreen";
