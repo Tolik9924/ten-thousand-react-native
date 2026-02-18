@@ -1,10 +1,10 @@
 {
-  "Home": "Home",
-  "Search": "Search",
-  "Profile": "Profile",
-  "settings": "Settings",
-  "addPhoto": "Add Photo",
-  "name": "Name",
-  "language": "Language",
-  "logout": "Logout"
+	"Home": "Home",
+	"Search": "Search",
+	"Profile": "Profile",
+	"settings": "Settings",
+	"addPhoto": "Add Photo",
+	"name": "Name",
+	"language": "Language",
+	"logout": "Logout"
 }

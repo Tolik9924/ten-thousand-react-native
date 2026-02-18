@@ -1,10 +1,10 @@
 {
-  "Home": "منزل",
-  "Search": "بحث",
-  "Profile": "مظهر جانبي",
-  "settings": "الإعدادات",
-  "addPhoto": "أضف صورة",
-  "name": "الاسم",
-  "language": "اللغة",
-  "logout": "تسجيل الخروج"
+	"Home": "منزل",
+	"Search": "بحث",
+	"Profile": "مظهر جانبي",
+	"settings": "الإعدادات",
+	"addPhoto": "أضف صورة",
+	"name": "الاسم",
+	"language": "اللغة",
+	"logout": "تسجيل الخروج"
 }

@@ -1,60 +1,54 @@
-import { BottomMenu } from "@/src/components/BottomMenu/BottomMenu";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React, { useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
-import SplashScreen from "../../Splash/SplashScreen";
+import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import SplashScreen from '../../Splash/SplashScreen';
 
-import Input from "@/src/components/Input/Input";
-import { styles } from "./SearchScreen.styles";
+import Input from '@/components/Input/Input';
+import { styles } from './SearchScreen.styles';
 
 export default function SearchScreen({ navigation }: any) {
-  const [query, setQuery] = useState("");
+	const [query, setQuery] = useState('');
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["allPosts"],
-    queryFn: async () => {
-      const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
-      return res.data;
-    },
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
-  });
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ['allPosts'],
+		queryFn: async () => {
+			const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
+			return res.data;
+		},
+		staleTime: 1000 * 60 * 5,
+		gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
+	});
 
-  if (isLoading) return <SplashScreen />;
-  if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
+	if (isLoading) return <SplashScreen />;
+	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
-  const filteredPosts = data?.filter((post: any) =>
-    post.title.toLowerCase().includes(query.toLowerCase()),
-  );
+	const filteredPosts = data?.filter((post: any) =>
+		post.title.toLowerCase().includes(query.toLowerCase()),
+	);
 
-  return (
-    <View style={styles.page}>
-      <View style={styles.posts}>
-        <Input
-          placeholder="Search posts..."
-          value={query}
-          onChangeText={setQuery}
-        />
+	return (
+		<View style={styles.page}>
+			<View style={styles.posts}>
+				<Input placeholder="Search posts..." value={query} onChangeText={setQuery} />
 
-        <FlatList
-          data={filteredPosts}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("PostScreen", { postId: item.id })
-              }
-            >
-              <View style={styles.post}>
-                <Text style={{ fontWeight: "bold" }}>{item.title}</Text>
-                <Text numberOfLines={2}>{item.body}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-      <BottomMenu />
-    </View>
-  );
+				<FlatList
+					data={filteredPosts}
+					keyExtractor={(item) => item.id.toString()}
+					renderItem={({ item }) => (
+						<TouchableOpacity
+							onPress={() => navigation.navigate('PostScreen', { postId: item.id })}
+						>
+							<View style={styles.post}>
+								<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
+								<Text numberOfLines={2}>{item.body}</Text>
+							</View>
+						</TouchableOpacity>
+					)}
+				/>
+			</View>
+			<BottomMenu />
+		</View>
+	);
 }

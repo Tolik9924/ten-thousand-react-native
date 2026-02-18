@@ -1,34 +1,32 @@
 {
-  "expo": {
-    "name": "ten-thousand-react-native",
-    "slug": "ten-thousand-react-native",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "",
-    "scheme": "tenthousandreactnative",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "jsEngine": "hermes",
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE"
-      },
-      "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.tenthousandreactnative"
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-secure-store"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    }
-  }
+	"expo": {
+		"name": "ten-thousand-react-native",
+		"slug": "ten-thousand-react-native",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "",
+		"scheme": "tenthousandreactnative",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"jsEngine": "hermes",
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"adaptiveIcon": {
+				"backgroundColor": "#E6F4FE"
+			},
+			"edgeToEdgeEnabled": true,
+			"package": "com.anonymous.tenthousandreactnative"
+		},
+		"web": {
+			"output": "static",
+			"favicon": "./assets/images/favicon.png"
+		},
+		"plugins": ["expo-secure-store"],
+		"experiments": {
+			"typedRoutes": true,
+			"reactCompiler": true
+		}
+	}
 }
