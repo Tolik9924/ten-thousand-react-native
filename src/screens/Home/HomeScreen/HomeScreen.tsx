@@ -1,11 +1,12 @@
-import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import SplashScreen from '../../Splash/SplashScreen';
+import { useQuery } from '@tanstack/react-query';
+import { RootState } from '@/redux/store';
+import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
+import SplashScreen from '@/screens/Splash/SplashScreen';
+import { ScreenProps } from '@/navigation/types';
 
 import { styles } from './HomeScreen.styles';
 
@@ -16,7 +17,7 @@ type List = {
 	userId: string;
 };
 
-export default function HomeScreen({ navigation }: any) {
+export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
 	const user = useSelector((state: RootState) => state.user);
 
 	const { data, isLoading, isError } = useQuery({

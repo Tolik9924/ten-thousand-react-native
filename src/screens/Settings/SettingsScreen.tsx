@@ -10,8 +10,9 @@ import { RootState } from '@/redux/store';
 import { Button } from '@/components/Button/Button';
 import { Link } from '@/components/Link/Link';
 import { styles } from './SettingsScreen.styles';
+import { ScreenProps } from '@/navigation/types';
 
-export default function SettingsScreen({ navigation }: any) {
+export default function SettingsScreen({ navigation }: ScreenProps<'Settings'>) {
 	const dispatch = useDispatch();
 	const { name, photo } = useSelector((state: RootState) => state.user);
 	const { t, i18n } = useTranslation();

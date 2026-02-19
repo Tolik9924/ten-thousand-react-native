@@ -7,11 +7,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '@/redux/slices/authSlice';
-
 import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { styles } from './LoginScreen.styles';
+import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
 	username: string;
@@ -21,7 +21,7 @@ interface FormData {
 // name emilys
 // password emilyspass
 
-export default function LoginScreen({ navigation }: any) {
+export default function LoginScreen({ navigation }: ScreenProps<'Login'>) {
 	const [error, setError] = useState('');
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const { control, handleSubmit } = useForm<FormData>();
@@ -53,7 +53,8 @@ export default function LoginScreen({ navigation }: any) {
 			dispatch(loginSuccess(res.data.token));
 			dispatch(setName(username));
 			navigation.replace('CreatePin');
-		} catch (error) {
+		} catch (error: unknown) {
+			console.log('ERROR: ', error);
 			setError('Error: Invalid E-mail or Password');
 		}
 	};

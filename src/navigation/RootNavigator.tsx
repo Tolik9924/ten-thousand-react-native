@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SecureStore from 'expo-secure-store';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '@/redux/store';
 import CreatePinScreen from '../screens/Auth/CreatePinScreen/CreatePinScreen';
 import PinCodeScreen from '../screens/Auth/CreatePinScreen/PinCodeScreen';
 import SplashScreen from '../screens/Splash/SplashScreen';

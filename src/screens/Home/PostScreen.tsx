@@ -3,8 +3,9 @@ import axios from 'axios';
 import React from 'react';
 import { ScrollView, Text } from 'react-native';
 import SplashScreen from '../Splash/SplashScreen';
+import { ScreenProps } from '@/navigation/types';
 
-export default function PostScreen({ route }: any) {
+export default function PostScreen({ route }: ScreenProps<'PostScreen'>) {
 	const { postId } = route.params;
 
 	const { data, isLoading, isError } = useQuery({

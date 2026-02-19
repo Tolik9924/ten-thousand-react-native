@@ -4,8 +4,9 @@ import HomeScreen from '../screens/Home/HomeScreen/HomeScreen';
 import PostScreen from '../screens/Home/PostScreen';
 import SearchScreen from '../screens/Home/SearchScreen/SearchScreen';
 import SettingsScreen from '../screens/Settings/SettingsScreen';
+import { RootStackParamList } from '@/navigation/types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function HomeStack() {
 	return (

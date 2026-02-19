@@ -1,9 +1,4 @@
-import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
-import { Button } from '@/components/Button/Button';
-import Input from '@/components/Input/Input';
-import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import {
 	Alert,
 	Keyboard,
@@ -13,8 +8,14 @@ import {
 	Text,
 	View,
 } from 'react-native';
-import { validatePassword } from '../../../utils/validation';
+import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
+import { Button } from '@/components/Button/Button';
+import Input from '@/components/Input/Input';
+import { Ionicons } from '@expo/vector-icons';
+import { Controller, useForm } from 'react-hook-form';
+import { validatePassword } from '@/utils/validation';
 import { styles } from './RegisterScreen.styles';
+import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
 	name: string;
@@ -22,7 +23,7 @@ interface FormData {
 	password: string;
 }
 
-export default function RegisterScreen({ navigation }: any) {
+export default function RegisterScreen({ navigation }: ScreenProps<'Register'>) {
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const {
 		control,

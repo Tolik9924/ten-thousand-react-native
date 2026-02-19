@@ -1,14 +1,14 @@
-import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import SplashScreen from '../../Splash/SplashScreen';
-
+import { useQuery } from '@tanstack/react-query';
+import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
+import SplashScreen from '@/screens/Splash/SplashScreen';
+import { Post, ScreenProps } from '@/navigation/types';
 import { styles } from './SearchScreen.styles';
 
-export default function SearchScreen({ navigation }: any) {
+export default function SearchScreen({ navigation }: ScreenProps<'Search'>) {
 	const [query, setQuery] = useState('');
 
 	const { data, isLoading, isError } = useQuery({
@@ -24,7 +24,7 @@ export default function SearchScreen({ navigation }: any) {
 	if (isLoading) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
-	const filteredPosts = data?.filter((post: any) =>
+	const filteredPosts: Post[] = data?.filter((post: Post) =>
 		post.title.toLowerCase().includes(query.toLowerCase()),
 	);
 

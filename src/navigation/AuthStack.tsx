@@ -5,8 +5,9 @@ import CreatePinScreen from '../screens/Auth/CreatePinScreen/CreatePinScreen';
 import PinCodeScreen from '../screens/Auth/CreatePinScreen/PinCodeScreen';
 import LoginScreen from '../screens/Auth/LoginScreen/LoginScreen';
 import RegisterScreen from '../screens/Auth/RegisterScreen/RegisterScreen';
+import { RootStackParamList } from '@/navigation/types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function AuthStack() {
 	return (

@@ -1,4 +1,4 @@
-import SplashScreen from '@/src/screens/Splash/SplashScreen';
+import SplashScreen from '@/screens/Splash/SplashScreen';
 import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { StatusBar } from 'react-native';
