@@ -8,8 +8,9 @@ import PinCodeScreen from '../screens/Auth/CreatePinScreen/PinCodeScreen';
 import SplashScreen from '../screens/Splash/SplashScreen';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
+import { RootStackParamList } from '@/navigation/types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootNavigator() {
 	const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);

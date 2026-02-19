@@ -4,8 +4,9 @@ import { InfoContainer } from '@/components/InfoContainer/InfoContainer';
 import { Link } from '@/components/Link/Link';
 import { View } from 'react-native';
 import { styles } from './AuthScreen.styles';
+import { ScreenProps } from '@/navigation/types';
 
-const AuthScreen = ({ navigation }: any) => {
+const AuthScreen = ({ navigation }: ScreenProps<'Auth'>) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.content}>

@@ -11,6 +11,7 @@ export type RootStackParamList = {
 	Login: undefined;
 	CreatePin: undefined;
 	PinCode: undefined;
+	HomeStack: undefined;
 };
 
 export type ScreenProps<T extends keyof RootStackParamList> = NativeStackScreenProps<

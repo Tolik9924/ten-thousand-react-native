@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import { Alert, Text, View } from 'react-native';
 import { getPin } from '@/services/storage';
 import { NumberKey } from './constants';
-
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
-import { styles } from './PinCode.styles';
 import { Dots } from './components/Dots/Dots';
 import { Keyboard } from './components/Keyboard/Keyboard';
+import { ScreenProps } from '@/navigation/types';
+import { styles } from './PinCode.styles';
 
-export default function PinCodeScreen({ navigation }: any) {
+export default function PinCodeScreen({ navigation }: ScreenProps<'PinCode'>) {
 	const [pin, setPin] = useState('');
 
 	useEffect(() => {

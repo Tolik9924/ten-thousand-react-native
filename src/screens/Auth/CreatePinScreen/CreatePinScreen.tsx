@@ -2,15 +2,15 @@ import { savePin } from '@/services/storage';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Alert, Text, View } from 'react-native';
-
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
 import { styles } from './PinCode.styles';
 import { Dots } from './components/Dots/Dots';
 import { Keyboard } from './components/Keyboard/Keyboard';
 import { NumberKey } from './constants';
+import { ScreenProps } from '@/navigation/types';
 
-export default function CreatePinScreen({ navigation }: any) {
+export default function CreatePinScreen({ navigation }: ScreenProps<'CreatePin'>) {
 	const [pin, setPin] = useState('');
 
 	const handlePress = (digit: NumberKey) => {
