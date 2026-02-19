@@ -11,7 +11,7 @@ import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { styles } from './LoginScreen.styles';
-import { ScreenProps } from '@/navigation/types';
+//import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
 	username: string;
@@ -21,7 +21,7 @@ interface FormData {
 // name emilys
 // password emilyspass
 
-export default function LoginScreen({ navigation }: ScreenProps<'Login'>) {
+export default function LoginScreen() {
 	const [error, setError] = useState('');
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const { control, handleSubmit } = useForm<FormData>();
@@ -52,7 +52,8 @@ export default function LoginScreen({ navigation }: ScreenProps<'Login'>) {
 			const username = `${res.data.firstName} ${res.data.lastName}`;
 			dispatch(loginSuccess(res.data.token));
 			dispatch(setName(username));
-			navigation.replace('CreatePin');
+			//navigation.replace('CreatePin');
+			console.log('NAVIGATION LOGIN');
 		} catch (error: unknown) {
 			console.log('ERROR: ', error);
 			setError('Error: Invalid E-mail or Password');
@@ -126,9 +127,7 @@ export default function LoginScreen({ navigation }: ScreenProps<'Login'>) {
 
 				<View style={[styles.submitButton, { bottom: keyboardHeight + 120 }]}>
 					<Button title="Login" onPress={handleSubmit(onSubmit)} />
-					{keyboardHeight === 0 && (
-						<Link text="Create account" navigate={() => navigation.navigate('Register')} />
-					)}
+					{keyboardHeight === 0 && <Link text="Create account" navigate={() => {}} />}
 				</View>
 			</View>
 		</View>

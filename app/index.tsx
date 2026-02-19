@@ -1,6 +1,7 @@
 // index.ts
-import { registerRootComponent } from 'expo';
-import App from './App'; // шлях до твого App.ts
+import 'expo-router/entry';
+import AuthScreen from '@/screens/Auth/AuthScreen/AuthScreen';
 
-// Реєструємо кореневий компонент
-registerRootComponent(App);
+export default function Page() {
+	return <AuthScreen />;
+}

@@ -15,7 +15,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { validatePassword } from '@/utils/validation';
 import { styles } from './RegisterScreen.styles';
-import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
 	name: string;
@@ -23,7 +22,7 @@ interface FormData {
 	password: string;
 }
 
-export default function RegisterScreen({ navigation }: ScreenProps<'Register'>) {
+export default function RegisterScreen() {
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const {
 		control,
@@ -33,7 +32,8 @@ export default function RegisterScreen({ navigation }: ScreenProps<'Register'>) 
 
 	const onSubmit = (data: FormData) => {
 		Alert.alert('Registered!', JSON.stringify(data));
-		navigation.navigate('Login');
+		//navigation.navigate('Login');
+		console.log('LOGIN');
 	};
 
 	useEffect(() => {

@@ -23,7 +23,7 @@
 			"output": "static",
 			"favicon": "./assets/images/favicon.png"
 		},
-		"plugins": ["expo-secure-store"],
+		"plugins": ["expo-secure-store", "expo-router"],
 		"experiments": {
 			"typedRoutes": true,
 			"reactCompiler": true
