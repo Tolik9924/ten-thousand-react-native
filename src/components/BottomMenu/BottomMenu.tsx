@@ -1,40 +1,32 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
 import { styles } from './BottomMenu.styles';
+import { useRouter } from 'expo-router';
 
 const MENU = [
 	{
 		iconName: 'home',
 		name: 'Home',
-		navigate: 'Home',
+		navigate: 'home',
 	},
 	{
 		iconName: 'search',
 		name: 'Search',
-		navigate: 'Search',
+		navigate: 'search',
 	},
 	{
 		iconName: 'person',
 		name: 'Profile',
-		navigate: 'Settings',
+		navigate: 'settings',
 	},
 ] as const;
 
-type RootStackParamList = {
-	Home: undefined;
-	Search: undefined;
-	Settings: undefined;
-};
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
 export const BottomMenu = () => {
-	const navigation = useNavigation<NavigationProp>();
 	const route = useRoute();
+	const router = useRouter();
 
 	const { t } = useTranslation();
 
@@ -44,7 +36,7 @@ export const BottomMenu = () => {
 				<TouchableOpacity
 					style={styles.item}
 					key={item.name}
-					onPress={() => navigation.navigate(item.navigate)}
+					onPress={() => router.push(`/home/${item.navigate}`)}
 				>
 					<Ionicons
 						name={item.iconName}

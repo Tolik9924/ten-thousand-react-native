@@ -8,11 +8,12 @@ import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
 import { Dots } from './components/Dots/Dots';
 import { Keyboard } from './components/Keyboard/Keyboard';
-import { ScreenProps } from '@/navigation/types';
 import { styles } from './PinCode.styles';
+import { useRouter } from 'expo-router';
 
-export default function PinCodeScreen({ navigation }: ScreenProps<'PinCode'>) {
+export default function PinCodeScreen() {
 	const [pin, setPin] = useState('');
+	const router = useRouter();
 
 	useEffect(() => {
 		(async () => {
@@ -21,7 +22,10 @@ export default function PinCodeScreen({ navigation }: ScreenProps<'PinCode'>) {
 				const result = await LocalAuthentication.authenticateAsync({
 					promptMessage: 'Login with Biometrics',
 				});
-				if (result.success) navigation.replace('HomeStack');
+				if (result.success) {
+					//navigation.replace('HomeStack');
+					router.push('/home/home');
+				}
 			}
 		})();
 	}, []);
@@ -39,7 +43,8 @@ export default function PinCodeScreen({ navigation }: ScreenProps<'PinCode'>) {
 	const handleSubmit = async () => {
 		const savedPin = await getPin();
 		if (pin === savedPin) {
-			navigation.replace('HomeStack');
+			//navigation.replace('HomeStack');
+			router.push('/home/home');
 		} else {
 			Alert.alert('Incorrect PIN');
 		}
@@ -55,7 +60,7 @@ export default function PinCodeScreen({ navigation }: ScreenProps<'PinCode'>) {
 						<View style={styles.titleSvg}>
 							<Ionicons name="phone-portrait-outline" size={24} color="#00A36D" />
 						</View>
-						<Text style={styles.title}>Create a pin code</Text>
+						<Text style={styles.title}>Enter a pin code</Text>
 					</View>
 					<View style={styles.pinCodeContainer}>
 						<Text style={styles.explainText}>enter 5 digit code: </Text>

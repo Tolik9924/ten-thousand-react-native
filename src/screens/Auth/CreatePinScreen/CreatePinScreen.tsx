@@ -8,10 +8,11 @@ import { styles } from './PinCode.styles';
 import { Dots } from './components/Dots/Dots';
 import { Keyboard } from './components/Keyboard/Keyboard';
 import { NumberKey } from './constants';
-import { ScreenProps } from '@/navigation/types';
+import { useRouter } from 'expo-router';
 
-export default function CreatePinScreen({ navigation }: ScreenProps<'CreatePin'>) {
+export default function CreatePinScreen() {
 	const [pin, setPin] = useState('');
+	const router = useRouter();
 
 	const handlePress = (digit: NumberKey) => {
 		if (pin.length < 5) {
@@ -31,7 +32,7 @@ export default function CreatePinScreen({ navigation }: ScreenProps<'CreatePin'>
 
 		try {
 			await savePin(pin);
-			navigation.replace('PinCode');
+			router.push('/auth/pin-code');
 		} catch (error) {
 			Alert.alert('Error', 'Failed to save PIN');
 			console.error(error);
@@ -48,7 +49,7 @@ export default function CreatePinScreen({ navigation }: ScreenProps<'CreatePin'>
 						<View style={styles.titleSvg}>
 							<Ionicons name="phone-portrait-outline" size={24} color="#00A36D" />
 						</View>
-						<Text style={styles.title}>Repeat a Pin code</Text>
+						<Text style={styles.title}>Create a Pin code</Text>
 					</View>
 					<View style={styles.pinCodeContainer}>
 						<Text style={styles.explainText}>enter 5 digit code: </Text>

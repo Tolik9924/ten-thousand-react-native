@@ -10,17 +10,18 @@ import { RootState } from '@/redux/store';
 import { Button } from '@/components/Button/Button';
 import { Link } from '@/components/Link/Link';
 import { styles } from './SettingsScreen.styles';
-import { ScreenProps } from '@/navigation/types';
+import { useRouter } from 'expo-router';
 
-export default function SettingsScreen({ navigation }: ScreenProps<'Settings'>) {
+export default function SettingsScreen() {
 	const dispatch = useDispatch();
 	const { name, photo } = useSelector((state: RootState) => state.user);
 	const { t, i18n } = useTranslation();
+	const router = useRouter();
 
 	const handleLogout = async () => {
 		dispatch(logout());
 		await deletePin();
-		navigation.replace('AuthStack');
+		router.push('/auth/login');
 	};
 
 	const changeLanguage = (lang: string) => {

@@ -9,6 +9,8 @@ export default function AuthLayout() {
 		>
 			<Stack.Screen name="login" />
 			<Stack.Screen name="register" />
+			<Stack.Screen name="create-pin-code" />
+			<Stack.Screen name="pin-code" />
 		</Stack>
 	);
 }

@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/redux/store';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import SplashScreen from '@/screens/Splash/SplashScreen';
-import { ScreenProps } from '@/navigation/types';
 
 import { styles } from './HomeScreen.styles';
 
@@ -17,7 +16,7 @@ type List = {
 	userId: string;
 };
 
-export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
+export default function HomeScreen() {
 	const user = useSelector((state: RootState) => state.user);
 
 	const { data, isLoading, isError } = useQuery({
@@ -69,7 +68,10 @@ export default function HomeScreen({ navigation }: ScreenProps<'Home'>) {
 							{data.map((item: List) => (
 								<View key={item.id}>
 									<TouchableOpacity
-										onPress={() => navigation.navigate('PostScreen', { postId: item.id })}
+										onPress={() => {
+											//navigation.navigate('PostScreen', { postId: item.id })}
+											console.log('NAVIGATE POST SCREEN.');
+										}}
 									>
 										<View style={styles.post}>
 											<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>

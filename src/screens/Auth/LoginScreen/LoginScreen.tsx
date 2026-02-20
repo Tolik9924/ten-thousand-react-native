@@ -11,6 +11,7 @@ import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { styles } from './LoginScreen.styles';
+import { useRouter } from 'expo-router';
 //import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
@@ -26,6 +27,7 @@ export default function LoginScreen() {
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const { control, handleSubmit } = useForm<FormData>();
 	const dispatch = useDispatch();
+	const router = useRouter();
 
 	useEffect(() => {
 		const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -52,8 +54,7 @@ export default function LoginScreen() {
 			const username = `${res.data.firstName} ${res.data.lastName}`;
 			dispatch(loginSuccess(res.data.token));
 			dispatch(setName(username));
-			//navigation.replace('CreatePin');
-			console.log('NAVIGATION LOGIN');
+			router.push('/auth/create-pin-code');
 		} catch (error: unknown) {
 			console.log('ERROR: ', error);
 			setError('Error: Invalid E-mail or Password');
