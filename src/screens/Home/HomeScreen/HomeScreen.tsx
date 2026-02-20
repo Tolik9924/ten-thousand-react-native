@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import { useRouter } from 'expo-router';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +18,7 @@ type List = {
 };
 
 export default function HomeScreen() {
+	const router = useRouter();
 	const user = useSelector((state: RootState) => state.user);
 
 	const { data, isLoading, isError } = useQuery({
@@ -70,6 +72,7 @@ export default function HomeScreen() {
 									<TouchableOpacity
 										onPress={() => {
 											//navigation.navigate('PostScreen', { postId: item.id })}
+											router.push(`/home/post/${item.id}`);
 											console.log('NAVIGATE POST SCREEN.');
 										}}
 									>

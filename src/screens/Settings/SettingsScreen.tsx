@@ -1,16 +1,15 @@
-import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
-import { deletePin } from '@/services/storage';
 import React from 'react';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Image, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/redux/slices/authSlice';
 import { RootState } from '@/redux/store';
-
+import { deletePin } from '@/services/storage';
+import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import { Button } from '@/components/Button/Button';
 import { Link } from '@/components/Link/Link';
 import { styles } from './SettingsScreen.styles';
-import { useRouter } from 'expo-router';
 
 export default function SettingsScreen() {
 	const dispatch = useDispatch();
@@ -24,8 +23,8 @@ export default function SettingsScreen() {
 		router.push('/auth/login');
 	};
 
-	const changeLanguage = (lang: string) => {
-		i18n.changeLanguage(lang);
+	const changeLanguage = async (lang: string) => {
+		await i18n.changeLanguage(lang);
 	};
 
 	return (
