@@ -1,7 +1,7 @@
 import HomeScreen from '@/screens/Home/HomeScreen/HomeScreen';
 
-const Home = () => {
+const Index = () => {
 	return <HomeScreen />;
 };
 
-export default Home;
+export default Index;

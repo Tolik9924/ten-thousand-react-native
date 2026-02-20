@@ -23,8 +23,7 @@ export default function PinCodeScreen() {
 					promptMessage: 'Login with Biometrics',
 				});
 				if (result.success) {
-					//navigation.replace('HomeStack');
-					router.push('/home/home');
+					router.push('/home');
 				}
 			}
 		})();
@@ -43,8 +42,7 @@ export default function PinCodeScreen() {
 	const handleSubmit = async () => {
 		const savedPin = await getPin();
 		if (pin === savedPin) {
-			//navigation.replace('HomeStack');
-			router.push('/home/home');
+			router.push('/home');
 		} else {
 			Alert.alert('Incorrect PIN');
 		}

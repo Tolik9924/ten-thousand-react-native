@@ -7,7 +7,7 @@ export default function HomeLayout() {
 				headerShown: false,
 			}}
 		>
-			<Stack.Screen name="home" />
+			<Stack.Screen name="index" />
 			<Stack.Screen name="settings" />
 		</Stack>
 	);
