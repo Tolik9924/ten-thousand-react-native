@@ -5,9 +5,9 @@ import { useQuery } from '@tanstack/react-query';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
 import SplashScreen from '@/screens/Splash/SplashScreen';
-import { Post } from '@/navigation/types';
 import { styles } from './SearchScreen.styles';
 import { useRouter } from 'expo-router';
+import { Post } from './types';
 
 export default function SearchScreen() {
 	const [query, setQuery] = useState('');
