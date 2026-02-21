@@ -12,7 +12,6 @@ import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { styles } from './LoginScreen.styles';
 import { useRouter } from 'expo-router';
-//import { ScreenProps } from '@/navigation/types';
 
 interface FormData {
 	username: string;
@@ -128,7 +127,14 @@ export default function LoginScreen() {
 
 				<View style={[styles.submitButton, { bottom: keyboardHeight + 120 }]}>
 					<Button title="Login" onPress={handleSubmit(onSubmit)} />
-					{keyboardHeight === 0 && <Link text="Create account" navigate={() => {}} />}
+					{keyboardHeight === 0 && (
+						<Link
+							text="Create account"
+							navigate={() => {
+								router.push('/auth/register');
+							}}
+						/>
+					)}
 				</View>
 			</View>
 		</View>

@@ -5,7 +5,6 @@ import { InfoContainer } from '@/components/InfoContainer/InfoContainer';
 import { Link } from '@/components/Link/Link';
 import { View } from 'react-native';
 import { styles } from './AuthScreen.styles';
-//import { ScreenProps } from '@/navigation/types';
 
 const AuthScreen = () => {
 	const router = useRouter();

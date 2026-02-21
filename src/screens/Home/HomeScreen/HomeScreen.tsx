@@ -71,9 +71,7 @@ export default function HomeScreen() {
 								<View key={item.id}>
 									<TouchableOpacity
 										onPress={() => {
-											//navigation.navigate('PostScreen', { postId: item.id })}
 											router.push(`/home/post/${item.id}`);
-											console.log('NAVIGATE POST SCREEN.');
 										}}
 									>
 										<View style={styles.post}>

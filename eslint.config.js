@@ -2,7 +2,6 @@ import js from '@eslint/js';
 import globals from 'globals';
 import prettier from 'eslint-plugin-prettier';
 import tsParser from '@typescript-eslint/parser';
-//import cssModules from 'eslint-plugin-css-modules';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from '@typescript-eslint/eslint-plugin';
@@ -38,7 +37,6 @@ export default [
 		},
 		rules: {
 			...tseslint.configs.recommended.rules, // Use recommended TypeScript rules
-			//'css-modules/no-unused-class': 'error',
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{ argsIgnorePattern: '^_', varsIgnorePattern: '^_' },

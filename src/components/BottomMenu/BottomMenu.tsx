@@ -10,17 +10,17 @@ const MENU = [
 	{
 		iconName: 'home',
 		name: 'Home',
-		navigate: 'home',
+		navigate: '/home',
 	},
 	{
 		iconName: 'search',
 		name: 'Search',
-		navigate: 'search',
+		navigate: '/home/search',
 	},
 	{
 		iconName: 'person',
 		name: 'Profile',
-		navigate: 'settings',
+		navigate: '/home/settings',
 	},
 ] as const;
 
@@ -36,7 +36,7 @@ export const BottomMenu = () => {
 				<TouchableOpacity
 					style={styles.item}
 					key={item.name}
-					onPress={() => router.push(`/home/${item.navigate}`)}
+					onPress={() => router.push(item.navigate)}
 				>
 					<Ionicons
 						name={item.iconName}

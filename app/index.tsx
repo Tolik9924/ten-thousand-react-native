@@ -1,4 +1,3 @@
-// index.ts
 import 'expo-router/entry';
 import AuthScreen from '@/screens/Auth/AuthScreen/AuthScreen';
 import { Redirect } from 'expo-router';

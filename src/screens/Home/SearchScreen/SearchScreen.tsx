@@ -42,7 +42,6 @@ export default function SearchScreen() {
 						<TouchableOpacity
 							onPress={() => {
 								router.push(`/home/post/${item.id}`);
-								console.log('POST SCREEN');
 							}}
 						>
 							<View style={styles.post}>

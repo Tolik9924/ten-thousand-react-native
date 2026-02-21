@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { validatePassword } from '@/utils/validation';
 import { styles } from './RegisterScreen.styles';
+import { useRouter } from 'expo-router';
 
 interface FormData {
 	name: string;
@@ -23,6 +24,7 @@ interface FormData {
 }
 
 export default function RegisterScreen() {
+	const router = useRouter();
 	const [keyboardHeight, setKeyboardHeight] = useState(0);
 	const {
 		control,
@@ -32,8 +34,7 @@ export default function RegisterScreen() {
 
 	const onSubmit = (data: FormData) => {
 		Alert.alert('Registered!', JSON.stringify(data));
-		//navigation.navigate('Login');
-		console.log('LOGIN');
+		router.push('/auth/login');
 	};
 
 	useEffect(() => {
