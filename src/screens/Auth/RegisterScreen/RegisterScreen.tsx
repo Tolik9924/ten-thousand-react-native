@@ -1,21 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import {
-	Alert,
-	Keyboard,
-	KeyboardAvoidingView,
-	Platform,
-	ScrollView,
-	Text,
-	View,
-} from 'react-native';
+import React from 'react';
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Controller, useForm } from 'react-hook-form';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Ionicons } from '@expo/vector-icons';
-import { Controller, useForm } from 'react-hook-form';
+import { useKeyBoardHeight } from '@/hooks/useKeyboardHeight';
 import { validatePassword } from '@/utils/validation';
 import { styles } from './RegisterScreen.styles';
-import { useRouter } from 'expo-router';
 
 interface FormData {
 	name: string;
@@ -23,9 +16,9 @@ interface FormData {
 	password: string;
 }
 
-export default function RegisterScreen() {
+const RegisterScreen = () => {
 	const router = useRouter();
-	const [keyboardHeight, setKeyboardHeight] = useState(0);
+	const keyboardHeight = useKeyBoardHeight();
 	const {
 		control,
 		handleSubmit,
@@ -36,21 +29,6 @@ export default function RegisterScreen() {
 		Alert.alert('Registered!', JSON.stringify(data));
 		router.push('/auth/login');
 	};
-
-	useEffect(() => {
-		const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
-			setKeyboardHeight(e.endCoordinates.height);
-		});
-
-		const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-			setKeyboardHeight(0);
-		});
-
-		return () => {
-			showSub.remove();
-			hideSub.remove();
-		};
-	}, []);
 
 	return (
 		<View>
@@ -146,4 +124,6 @@ export default function RegisterScreen() {
 			</View>
 		</View>
 	);
-}
+};
+
+export default RegisterScreen;

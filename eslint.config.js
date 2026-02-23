@@ -28,6 +28,7 @@ export default [
 				},
 			},
 			globals: {
+				process: 'readonly',
 				...globals.browser, // Add browser globals like 'document'
 			},
 		},
@@ -81,6 +82,12 @@ export default [
 					endOfLine: 'auto',
 				},
 			],
+		},
+	},
+
+	{
+		env: {
+			node: true, // додає глобальні змінні Node, включно з process
 		},
 	},
 

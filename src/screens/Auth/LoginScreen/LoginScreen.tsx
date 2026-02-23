@@ -1,17 +1,20 @@
+import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { useDispatch } from 'react-redux';
+import { Controller, useForm } from 'react-hook-form';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { setName } from '@/redux/slices/userSlice';
 import { Ionicons } from '@expo/vector-icons';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
 import { loginSuccess } from '@/redux/slices/authSlice';
 import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
+import { useKeyBoardHeight } from '@/hooks/useKeyboardHeight';
+import { NAVIGATION } from '@/constants/navigation';
+import { apiUrl } from '@/constants/env';
+import api from '@/API';
 import { styles } from './LoginScreen.styles';
-import { useRouter } from 'expo-router';
 
 interface FormData {
 	username: string;
@@ -21,31 +24,16 @@ interface FormData {
 // name emilys
 // password emilyspass
 
-export default function LoginScreen() {
+const LoginScreen = () => {
 	const [error, setError] = useState('');
-	const [keyboardHeight, setKeyboardHeight] = useState(0);
+	const router = useRouter();
 	const { control, handleSubmit } = useForm<FormData>();
 	const dispatch = useDispatch();
-	const router = useRouter();
-
-	useEffect(() => {
-		const showSub = Keyboard.addListener('keyboardDidShow', (e) => {
-			setKeyboardHeight(e.endCoordinates.height);
-		});
-
-		const hideSub = Keyboard.addListener('keyboardDidHide', () => {
-			setKeyboardHeight(0);
-		});
-
-		return () => {
-			showSub.remove();
-			hideSub.remove();
-		};
-	}, []);
+	const keyboardHeight = useKeyBoardHeight();
 
 	const onSubmit = async (data: FormData) => {
 		try {
-			const res = await axios.post('https://dummyjson.com/auth/login', {
+			const res = await api.post(`${apiUrl}/auth/login`, {
 				username: data.username,
 				password: data.password,
 			});
@@ -53,7 +41,7 @@ export default function LoginScreen() {
 			const username = `${res.data.firstName} ${res.data.lastName}`;
 			dispatch(loginSuccess(res.data.token));
 			dispatch(setName(username));
-			router.push('/auth/create-pin-code');
+			router.push(NAVIGATION.createPinCode);
 		} catch (error: unknown) {
 			console.log('ERROR: ', error);
 			setError('Error: Invalid E-mail or Password');
@@ -139,4 +127,6 @@ export default function LoginScreen() {
 			</View>
 		</View>
 	);
-}
+};
+
+export default LoginScreen;
