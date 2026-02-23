@@ -1,7 +1,7 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiUrl } from '@/constants/env';
-import { getPin } from '@/services/storage';
+import { getAccessToken, clearTokens } from '@/services/authService';
+import { queryClient } from '@/queryClient';
 
 const api = axios.create({
 	baseURL: apiUrl,
@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-	const token = await getPin();
+	const token = await getAccessToken();
 	if (token && config.headers) {
 		config.headers.Authorization = `Bearer ${token}`;
 	}
@@ -20,7 +20,8 @@ api.interceptors.response.use(
 	(response) => response,
 	async (error) => {
 		if (error.response?.status === 401) {
-			await AsyncStorage.clear();
+			await clearTokens();
+			queryClient.clear();
 		}
 		return Promise.reject(error);
 	},

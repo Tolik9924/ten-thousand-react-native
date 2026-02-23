@@ -10,8 +10,6 @@ export const queryClient = new QueryClient({
 			staleTime: 1000 * 60 * 5, // 5 хв
 			gcTime: 1000 * 60 * 60, // 1 година
 			retry: 1,
-			refetchOnMount: false, // щоб не перезаписувати кеш при перезапуску
-			refetchOnReconnect: false,
 		},
 	},
 });

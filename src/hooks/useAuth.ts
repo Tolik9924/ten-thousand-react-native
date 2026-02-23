@@ -1,19 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import api from '@/API';
 import { apiUrl } from '@/constants/env';
-import { getRefreshToken } from '@/services/authService';
+import type { UserData } from '@/types/auth';
 
-export const useAuth = () => {
-	const token = getRefreshToken();
-
-	return useQuery({
+export const useAuth = (enabled: boolean) =>
+	useQuery<UserData>({
 		queryKey: ['user'],
 		queryFn: async () => {
-			const response = await api.get(`${apiUrl}/auth/me`);
+			const response = await api.get<UserData>(`${apiUrl}/auth/me`);
 			return response.data;
 		},
-		enabled: !!token, // remove for testing
+		enabled,
 		staleTime: 1000 * 60 * 5, // 5 minutes
 		retry: 1,
 	});
-};

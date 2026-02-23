@@ -12,14 +12,14 @@ import { AppProvider } from '../src/context/app-provider';
 export default function RootLayout() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<AppProvider>
-				<Provider store={store}>
-					<PersistGate loading={<SplashScreen />} persistor={persistor}>
+			<Provider store={store}>
+				<PersistGate loading={<SplashScreen />} persistor={persistor}>
+					<AppProvider>
 						<StatusBar barStyle="dark-content" backgroundColor="#fff" />
 						<Stack screenOptions={{ headerShown: false }} />
-					</PersistGate>
-				</Provider>
-			</AppProvider>
+					</AppProvider>
+				</PersistGate>
+			</Provider>
 		</QueryClientProvider>
 	);
 }

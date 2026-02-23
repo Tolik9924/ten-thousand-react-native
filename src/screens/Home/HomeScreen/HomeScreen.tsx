@@ -1,37 +1,16 @@
-import axios from 'axios';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import SplashScreen from '@/screens/Splash/SplashScreen';
 import { useAuthData } from '@/context/auth';
-
+import { usePosts, type Post } from '@/hooks/usePosts';
 import { styles } from './HomeScreen.styles';
-
-type List = {
-	body: string;
-	id: string;
-	title: string;
-	userId: string;
-};
 
 export default function HomeScreen() {
 	const router = useRouter();
 	const { user, isLoading: isLoadingUser } = useAuthData();
-
-	console.log('IS LOADING USER: ', isLoadingUser);
-	console.log('USER: ', user);
-
-	const { data, isLoading, isError } = useQuery({
-		queryKey: ['posts'],
-		queryFn: async () => {
-			const res = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=3');
-			return res.data;
-		},
-		staleTime: 1000 * 60 * 5,
-		gcTime: 1000 * 60 * 60,
-	});
+	const { data, isLoading, isError } = usePosts();
 
 	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
@@ -71,7 +50,7 @@ export default function HomeScreen() {
 					<View style={styles.postsContainer}>
 						<Text style={styles.postsTitle}>Posts</Text>
 						<View>
-							{data.map((item: List) => (
+							{(data ?? []).map((item: Post) => (
 								<View key={item.id}>
 									<TouchableOpacity
 										onPress={() => {

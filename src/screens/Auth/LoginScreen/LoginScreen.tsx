@@ -26,19 +26,15 @@ const LoginScreen = () => {
 	const router = useRouter();
 	const { control, handleSubmit } = useForm<FormData>();
 	const keyboardHeight = useKeyBoardHeight();
-	const { user, login: setUser } = useAuthData();
-
-	console.log('USER LOGIN: ', user);
+	const { login: setUser } = useAuthData();
 
 	const onSubmit = async (data: FormData) => {
 		try {
 			const loginData = await login(data);
 			setError('');
-			console.log('LOGIN DATA: ', loginData);
 			setUser(loginData);
 			router.push(NAVIGATION.createPinCode);
 		} catch (error: unknown) {
-			console.log('ERROR: ', error);
 			setError('Error: Invalid E-mail or Password');
 		}
 	};

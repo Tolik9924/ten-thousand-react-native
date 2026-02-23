@@ -1,24 +1,16 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, ReactNode, useContext, useState, useEffect } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import { useQueryClient } from '@tanstack/react-query';
+import { getRefreshToken, clearTokens } from '@/services/authService';
 import { useAuth } from '@/hooks/useAuth';
-
-type UserData = {
-	id: number;
-	username: string;
-	firstName: string;
-	lastName: string;
-	gender: string;
-	email: string;
-	image: string;
-};
+import type { UserData } from '@/types/auth';
 
 type AuthContextType = {
 	user: UserData | null;
 	isLogIn: boolean;
 	isLoading: boolean;
 	refetch: () => void;
-	logout: () => void;
+	logout: () => Promise<void>;
 	login: (userData: UserData) => void;
 };
 
@@ -27,41 +19,41 @@ type UserProvider = {
 };
 
 const AuthContext = createContext<AuthContextType>({
-	user: {
-		id: 0,
-		username: '',
-		firstName: '',
-		lastName: '',
-		gender: '',
-		email: '',
-		image: '',
-	},
+	user: null,
 	isLogIn: false,
 	isLoading: false,
 	refetch: () => {},
-	logout: () => {},
+	logout: async () => {},
 	login: () => {},
 });
 
 export const AuthProvider = ({ children }: UserProvider) => {
-	const { data, isLoading, refetch } = useAuth();
-	const [user, setUser] = useState<typeof data | null>(data);
-	//const user = data ?? null;
+	const queryClient = useQueryClient();
+	const [hasToken, setHasToken] = useState<boolean>(false);
+	const [localUser, setLocalUser] = useState<UserData | null>(null);
 
 	useEffect(() => {
-		if (data) {
-			setUser(data);
-		}
-	}, [data]);
+		getRefreshToken().then((token) => setHasToken(!!token));
+	}, []);
 
+	const { data: queryUser, isLoading, refetch } = useAuth(hasToken);
+
+	// queryUser (сервер) має пріоритет; localUser — fallback одразу після логіну
+	const user = queryUser ?? localUser;
 	const isLogIn = !!user?.id;
 
-	const logout = async () => {
-		await SecureStore.deleteItemAsync('auth');
-		setUser(null);
+	const login = (userData: UserData) => {
+		setLocalUser(userData);
+		setHasToken(true);
+		queryClient.setQueryData(['user'], userData);
 	};
 
-	const login = (userData: UserData) => setUser(userData);
+	const logout = async () => {
+		await clearTokens();
+		setHasToken(false);
+		setLocalUser(null);
+		queryClient.removeQueries({ queryKey: ['user'] });
+	};
 
 	return (
 		<AuthContext.Provider value={{ user, isLogIn, isLoading, refetch, logout, login }}>
