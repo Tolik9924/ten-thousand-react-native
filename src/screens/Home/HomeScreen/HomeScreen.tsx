@@ -2,11 +2,10 @@ import axios from 'axios';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/redux/store';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import SplashScreen from '@/screens/Splash/SplashScreen';
+import { useAuthData } from '@/context/auth';
 
 import { styles } from './HomeScreen.styles';
 
@@ -19,7 +18,10 @@ type List = {
 
 export default function HomeScreen() {
 	const router = useRouter();
-	const user = useSelector((state: RootState) => state.user);
+	const { user, isLoading: isLoadingUser } = useAuthData();
+
+	console.log('IS LOADING USER: ', isLoadingUser);
+	console.log('USER: ', user);
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['posts'],
@@ -28,10 +30,10 @@ export default function HomeScreen() {
 			return res.data;
 		},
 		staleTime: 1000 * 60 * 5,
-		gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
+		gcTime: 1000 * 60 * 60,
 	});
 
-	if (isLoading) return <SplashScreen />;
+	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
 	return (
@@ -39,7 +41,9 @@ export default function HomeScreen() {
 			<ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
 				<View style={styles.container}>
 					<View style={styles.welcomeContainer}>
-						<Text style={styles.welcomeText}>Hello, {user.name || 'User'}!</Text>
+						<Text style={styles.welcomeText}>
+							Hello, {`${user?.firstName} ${user?.lastName}` || 'User'}!
+						</Text>
 					</View>
 
 					<View style={styles.personalAdvisorContainer}>

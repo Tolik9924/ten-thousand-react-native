@@ -2,6 +2,8 @@ import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
 import api from '@/API';
 import { apiUrl } from '@/constants/env';
+import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 
 const AUTH_URL = `${apiUrl}/auth/login`;
 const REFRESH_URL = `${apiUrl}/auth/refresh`;
@@ -24,11 +26,18 @@ export interface AuthResponse {
 }
 
 // 💾 SAVE TOKENS (secure storage)
-export async function saveTokens(accessToken: string, refreshToken: string) {
-	await Keychain.setGenericPassword('auth', JSON.stringify({ accessToken, refreshToken }), {
-		accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED,
-	});
-}
+export const saveTokens = async (accessToken: string, refreshToken: string) => {
+	const tokens = JSON.stringify({ accessToken, refreshToken });
+	console.log('TOKENS: ', tokens);
+
+	if (Platform.OS === 'ios') {
+		await Keychain.setGenericPassword('auth', tokens, {
+			accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED,
+		});
+	} else if (Platform.OS === 'android') {
+		await SecureStore.setItemAsync('auth', tokens);
+	}
+};
 
 // 📥 GET ACCESS TOKEN
 export async function getAccessToken(): Promise<string | null> {
@@ -40,13 +49,23 @@ export async function getAccessToken(): Promise<string | null> {
 }
 
 // 📥 GET REFRESH TOKEN
-export async function getRefreshToken(): Promise<string | null> {
-	const credentials = await Keychain.getGenericPassword();
-	if (!credentials) return null;
+export const getRefreshToken = async (): Promise<string | null> => {
+	if (Platform.OS === 'ios') {
+		const credentials = await Keychain.getGenericPassword();
+		if (!credentials) return null;
 
-	const parsed = JSON.parse(credentials.password);
-	return parsed.refreshToken;
-}
+		const parsed = JSON.parse(credentials.password);
+		return parsed.refreshToken;
+	} else if (Platform.OS === 'android') {
+		const tokens = await SecureStore.getItemAsync('auth');
+		if (!tokens) return null;
+
+		const parsed = JSON.parse(tokens);
+		return parsed.refreshToken;
+	}
+
+	return null;
+};
 
 // 🔐 LOGIN
 export const login = async (payload: LoginPayload): Promise<AuthResponse> => {

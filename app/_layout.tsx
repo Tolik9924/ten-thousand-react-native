@@ -7,16 +7,19 @@ import { StatusBar } from 'react-native';
 import { queryClient } from '@/queryClient';
 import SplashScreen from '@/screens/Splash/SplashScreen';
 import { store, persistor } from '@/redux/store';
+import { AppProvider } from '../src/context/app-provider';
 
 export default function RootLayout() {
 	return (
-		<Provider store={store}>
-			<PersistGate loading={<SplashScreen />} persistor={persistor}>
-				<QueryClientProvider client={queryClient}>
-					<StatusBar barStyle="dark-content" backgroundColor="#fff" />
-					<Stack screenOptions={{ headerShown: false }} />
-				</QueryClientProvider>
-			</PersistGate>
-		</Provider>
+		<QueryClientProvider client={queryClient}>
+			<AppProvider>
+				<Provider store={store}>
+					<PersistGate loading={<SplashScreen />} persistor={persistor}>
+						<StatusBar barStyle="dark-content" backgroundColor="#fff" />
+						<Stack screenOptions={{ headerShown: false }} />
+					</PersistGate>
+				</Provider>
+			</AppProvider>
+		</QueryClientProvider>
 	);
 }

@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
-import { setName } from '@/redux/slices/userSlice';
 import { Ionicons } from '@expo/vector-icons';
 import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
-import { loginSuccess } from '@/redux/slices/authSlice';
 import { Button } from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { useKeyBoardHeight } from '@/hooks/useKeyboardHeight';
 import { NAVIGATION } from '@/constants/navigation';
-import { apiUrl } from '@/constants/env';
-import api from '@/API';
 import { styles } from './LoginScreen.styles';
+import { login } from '@/services/authService';
+import { useAuthData } from '@/context/auth';
 
 interface FormData {
 	username: string;
@@ -28,19 +25,17 @@ const LoginScreen = () => {
 	const [error, setError] = useState('');
 	const router = useRouter();
 	const { control, handleSubmit } = useForm<FormData>();
-	const dispatch = useDispatch();
 	const keyboardHeight = useKeyBoardHeight();
+	const { user, login: setUser } = useAuthData();
+
+	console.log('USER LOGIN: ', user);
 
 	const onSubmit = async (data: FormData) => {
 		try {
-			const res = await api.post(`${apiUrl}/auth/login`, {
-				username: data.username,
-				password: data.password,
-			});
+			const loginData = await login(data);
 			setError('');
-			const username = `${res.data.firstName} ${res.data.lastName}`;
-			dispatch(loginSuccess(res.data.token));
-			dispatch(setName(username));
+			console.log('LOGIN DATA: ', loginData);
+			setUser(loginData);
 			router.push(NAVIGATION.createPinCode);
 		} catch (error: unknown) {
 			console.log('ERROR: ', error);

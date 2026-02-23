@@ -2,23 +2,24 @@ import React from 'react';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Image, Text, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '@/redux/slices/authSlice';
+import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { deletePin } from '@/services/storage';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import { Button } from '@/components/Button/Button';
 import { Link } from '@/components/Link/Link';
 import { styles } from './SettingsScreen.styles';
+import { useAuthData } from '@/context/auth';
 
 export default function SettingsScreen() {
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 	const { name, photo } = useSelector((state: RootState) => state.user);
 	const { t, i18n } = useTranslation();
 	const router = useRouter();
+	const { logout } = useAuthData();
 
 	const handleLogout = async () => {
-		dispatch(logout());
+		logout();
 		await deletePin();
 		router.push('/auth/login');
 	};
