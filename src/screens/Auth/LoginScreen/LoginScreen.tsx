@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,9 +8,12 @@ import Input from '@/components/Input/Input';
 import { Link } from '@/components/Link/Link';
 import { useKeyBoardHeight } from '@/hooks/useKeyboardHeight';
 import { NAVIGATION } from '@/constants/navigation';
-import { styles } from './LoginScreen.styles';
 import { login } from '@/services/authService';
 import { useAuthData } from '@/context/auth';
+import { FORM_ERROR } from '@/screens/Auth/LoginScreen/constants';
+import { useNavigate } from '@/hooks/useNavigate';
+import { styles } from './LoginScreen.styles';
+import { PLATFORMS } from '@/constants/platforms';
 
 interface FormData {
 	username: string;
@@ -23,7 +25,7 @@ interface FormData {
 
 const LoginScreen = () => {
 	const [error, setError] = useState('');
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { control, handleSubmit } = useForm<FormData>();
 	const keyboardHeight = useKeyBoardHeight();
 	const { login: setUser } = useAuthData();
@@ -33,9 +35,9 @@ const LoginScreen = () => {
 			const loginData = await login(data);
 			setError('');
 			setUser(loginData);
-			router.push(NAVIGATION.createPinCode);
+			navigate(NAVIGATION.createPinCode);
 		} catch (error: unknown) {
-			setError('Error: Invalid E-mail or Password');
+			setError(FORM_ERROR);
 		}
 	};
 
@@ -55,7 +57,7 @@ const LoginScreen = () => {
 
 				<KeyboardAvoidingView
 					style={styles.scrollAvoidContainer}
-					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+					behavior={Platform.OS === PLATFORMS.ios ? 'padding' : 'height'}
 					keyboardVerticalOffset={0}
 				>
 					<ScrollView keyboardShouldPersistTaps="handled">
@@ -107,12 +109,7 @@ const LoginScreen = () => {
 				<View style={[styles.submitButton, { bottom: keyboardHeight + 120 }]}>
 					<Button title="Login" onPress={handleSubmit(onSubmit)} />
 					{keyboardHeight === 0 && (
-						<Link
-							text="Create account"
-							navigate={() => {
-								router.push('/auth/register');
-							}}
-						/>
+						<Link text="Create account" navigate={() => navigate(NAVIGATION.register)} />
 					)}
 				</View>
 			</View>

@@ -1,33 +1,42 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Text, View } from 'react-native';
-import { getPin } from '@/services/storage';
+import { getPin, savePin } from '@/services/storage';
 import { NumberKey } from './constants';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
 import { Dots } from './components/Dots/Dots';
+import { useNavigate } from '@/hooks/useNavigate';
 import { Keyboard } from './components/Keyboard/Keyboard';
+import { NAVIGATION } from '@/constants/navigation';
 import { styles } from './PinCode.styles';
-import { useRouter } from 'expo-router';
 
-export default function PinCodeScreen() {
+const PinCodeScreen = ({ isNewCode = false }: { isNewCode?: boolean }) => {
 	const [pin, setPin] = useState('');
-	const router = useRouter();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		(async () => {
+		if (!isNewCode) {
+			void authentication();
+		}
+	}, []);
+
+	const authentication = async () => {
+		try {
 			const compatible = await LocalAuthentication.hasHardwareAsync();
 			if (compatible) {
 				const result = await LocalAuthentication.authenticateAsync({
 					promptMessage: 'Login with Biometrics',
 				});
 				if (result.success) {
-					router.push('/home');
+					navigate(NAVIGATION.home);
 				}
 			}
-		})();
-	}, []);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const handlePress = (digit: NumberKey) => {
 		if (pin.length < 5) {
@@ -42,9 +51,24 @@ export default function PinCodeScreen() {
 	const handleSubmit = async () => {
 		const savedPin = await getPin();
 		if (pin === savedPin) {
-			router.push('/home');
+			navigate(NAVIGATION.home);
 		} else {
 			Alert.alert('Incorrect PIN');
+		}
+	};
+
+	const handleSavePin = async () => {
+		if (pin.length < 5) {
+			Alert.alert('Error', 'PIN must be 5 digits');
+			return;
+		}
+
+		try {
+			await savePin(pin);
+			navigate(NAVIGATION.pinCode);
+		} catch (error) {
+			Alert.alert('Error', 'Failed to save PIN');
+			console.error(error);
 		}
 	};
 
@@ -58,7 +82,7 @@ export default function PinCodeScreen() {
 						<View style={styles.titleSvg}>
 							<Ionicons name="phone-portrait-outline" size={24} color="#00A36D" />
 						</View>
-						<Text style={styles.title}>Enter a pin code</Text>
+						<Text style={styles.title}>{isNewCode ? 'Create a Pin code' : 'Enter a pin code'}</Text>
 					</View>
 					<View style={styles.pinCodeContainer}>
 						<Text style={styles.explainText}>enter 5 digit code: </Text>
@@ -71,10 +95,16 @@ export default function PinCodeScreen() {
 						<Keyboard handleDelete={handleDelete} handlePress={handlePress} />
 					</View>
 					<View style={styles.button}>
-						<Button title="Save PIN" onPress={handleSubmit} />
+						{!isNewCode ? (
+							<Button title="Save PIN" onPress={handleSubmit} />
+						) : (
+							<Button title="Save PIN" onPress={handleSavePin} />
+						)}
 					</View>
 				</View>
 			</View>
 		</View>
 	);
-}
+};
+
+export default PinCodeScreen;

@@ -12,5 +12,6 @@ export default ({ config }) => ({
 	extra: {
 		apiUrl: apiUrls[ENV],
 		appEnv: ENV,
+		postsUrl: process.env.EXPO_PUBLIC_POSTS,
 	},
 });

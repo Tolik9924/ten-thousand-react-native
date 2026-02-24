@@ -3,16 +3,17 @@ import * as Keychain from 'react-native-keychain';
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { apiUrl } from '@/constants/env';
+import { PLATFORMS } from '@/constants/platforms';
 
 const AUTH_URL = `${apiUrl}/auth/login`;
-const REFRESH_URL = `${apiUrl}/auth/refresh`;
+const AUTH = 'auth';
 
-export interface LoginPayload {
+export type LoginPayload = {
 	username: string;
 	password: string;
-}
+};
 
-export interface AuthResponse {
+export type AuthResponse = {
 	id: number;
 	username: string;
 	email: string;
@@ -22,37 +23,37 @@ export interface AuthResponse {
 	image: string;
 	accessToken: string;
 	refreshToken: string;
-}
+};
 
 // 💾 SAVE TOKENS (secure storage)
 export const saveTokens = async (accessToken: string, refreshToken: string) => {
 	const tokens = JSON.stringify({ accessToken, refreshToken });
-	if (Platform.OS === 'ios') {
-		await Keychain.setGenericPassword('auth', tokens, {
+	if (Platform.OS === PLATFORMS.ios) {
+		await Keychain.setGenericPassword(AUTH, tokens, {
 			accessible: Keychain.ACCESSIBLE.WHEN_UNLOCKED,
 		});
 	} else {
-		await SecureStore.setItemAsync('auth', tokens);
+		await SecureStore.setItemAsync(AUTH, tokens);
 	}
 };
 
 // 🗑️ CLEAR TOKENS
 export const clearTokens = async () => {
-	if (Platform.OS === 'ios') {
+	if (Platform.OS === PLATFORMS.ios) {
 		await Keychain.resetGenericPassword();
 	} else {
-		await SecureStore.deleteItemAsync('auth');
+		await SecureStore.deleteItemAsync(AUTH);
 	}
 };
 
 // 📥 GET ACCESS TOKEN
 export const getAccessToken = async (): Promise<string | null> => {
-	if (Platform.OS === 'ios') {
+	if (Platform.OS === PLATFORMS.ios) {
 		const credentials = await Keychain.getGenericPassword();
 		if (!credentials) return null;
 		return JSON.parse(credentials.password).accessToken;
 	} else {
-		const tokens = await SecureStore.getItemAsync('auth');
+		const tokens = await SecureStore.getItemAsync(AUTH);
 		if (!tokens) return null;
 		return JSON.parse(tokens).accessToken;
 	}
@@ -60,12 +61,12 @@ export const getAccessToken = async (): Promise<string | null> => {
 
 // 📥 GET REFRESH TOKEN
 export const getRefreshToken = async (): Promise<string | null> => {
-	if (Platform.OS === 'ios') {
+	if (Platform.OS === PLATFORMS.ios) {
 		const credentials = await Keychain.getGenericPassword();
 		if (!credentials) return null;
 		return JSON.parse(credentials.password).refreshToken;
 	} else {
-		const tokens = await SecureStore.getItemAsync('auth');
+		const tokens = await SecureStore.getItemAsync(AUTH);
 		if (!tokens) return null;
 		return JSON.parse(tokens).refreshToken;
 	}
@@ -77,19 +78,4 @@ export const login = async (payload: LoginPayload): Promise<AuthResponse> => {
 	const data = response.data;
 	await saveTokens(data.accessToken, data.refreshToken);
 	return data;
-};
-
-// 🔄 REFRESH TOKEN (raw axios to avoid interceptor loop)
-export const refreshToken = async (token: string): Promise<string> => {
-	const response = await axios.post(REFRESH_URL, { refreshToken: token });
-	const { accessToken } = response.data;
-	const storedRefresh = await getRefreshToken();
-	await saveTokens(accessToken, storedRefresh!);
-	return accessToken;
-};
-
-// 🧠 CHECK BIOMETRIC SUPPORT
-export const isBiometricAvailable = async () => {
-	const biometryType = await Keychain.getSupportedBiometryType();
-	return biometryType; // FACE_ID / TOUCH_ID / FINGERPRINT / null
 };

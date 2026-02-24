@@ -1,7 +1,7 @@
-import CreatePinScreen from '@/screens/Auth/CreatePinScreen/CreatePinScreen';
+import CodeScreen from '@/screens/Auth/CreatePinScreen/CodeScreen';
 
 const CreatePinCode = () => {
-	return <CreatePinScreen />;
+	return <CodeScreen isNewCode={true} />;
 };
 
 export default CreatePinCode;

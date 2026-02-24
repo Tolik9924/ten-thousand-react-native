@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }: UserProvider) => {
 
 	const { data: queryUser, isLoading, refetch } = useAuth(hasToken);
 
-	// queryUser (сервер) має пріоритет; localUser — fallback одразу після логіну
 	const user = queryUser ?? localUser;
 	const isLogIn = !!user?.id;
 

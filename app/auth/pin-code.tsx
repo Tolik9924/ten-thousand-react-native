@@ -1,7 +1,7 @@
-import PinCodeScreen from '@/screens/Auth/CreatePinScreen/PinCodeScreen';
+import CodeScreen from '@/screens/Auth/CreatePinScreen/CodeScreen';
 
 const PinCode = () => {
-	return <PinCodeScreen />;
+	return <CodeScreen />;
 };
 
 export default PinCode;

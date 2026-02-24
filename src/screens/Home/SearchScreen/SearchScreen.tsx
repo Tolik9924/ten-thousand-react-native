@@ -1,27 +1,20 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { useQuery } from '@tanstack/react-query';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
 import SplashScreen from '@/screens/Splash/SplashScreen';
 import { styles } from './SearchScreen.styles';
-import { useRouter } from 'expo-router';
 import { Post } from './types';
+import { useAllPosts } from '@/hooks/posts/useAllPosts';
+import { useNavigate } from '@/hooks/useNavigate';
+import { NAVIGATION } from '@/constants/navigation';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export default function SearchScreen() {
 	const [query, setQuery] = useState('');
-	const router = useRouter();
+	const navigate = useNavigate();
 
-	const { data, isLoading, isError } = useQuery({
-		queryKey: ['allPosts'],
-		queryFn: async () => {
-			const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-			return res.data;
-		},
-		staleTime: 1000 * 60 * 5,
-		gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!
-	});
+	const { data, isLoading, isError } = useAllPosts();
 
 	if (isLoading) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
@@ -30,20 +23,18 @@ export default function SearchScreen() {
 		post.title.toLowerCase().includes(query.toLowerCase()),
 	);
 
+	const debouncedFilteredPosts: Post[] = useDebounce(filteredPosts, 500);
+
 	return (
 		<View style={styles.page}>
 			<View style={styles.posts}>
 				<Input placeholder="Search posts..." value={query} onChangeText={setQuery} />
 
 				<FlatList
-					data={filteredPosts}
+					data={debouncedFilteredPosts}
 					keyExtractor={(item) => item.id.toString()}
 					renderItem={({ item }) => (
-						<TouchableOpacity
-							onPress={() => {
-								router.push(`/home/post/${item.id}`);
-							}}
-						>
+						<TouchableOpacity onPress={() => navigate(NAVIGATION.post(item.id))}>
 							<View style={styles.post}>
 								<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
 								<Text numberOfLines={2}>{item.body}</Text>

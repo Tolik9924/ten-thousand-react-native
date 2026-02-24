@@ -6,8 +6,8 @@ import { deletePin } from '@/services/storage';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import { Button } from '@/components/Button/Button';
 import { Link } from '@/components/Link/Link';
-import { styles } from './SettingsScreen.styles';
 import { useAuthData } from '@/context/auth';
+import { styles } from './SettingsScreen.styles';
 
 export default function SettingsScreen() {
 	const { t, i18n } = useTranslation();

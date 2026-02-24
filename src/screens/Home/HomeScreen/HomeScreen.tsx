@@ -1,16 +1,19 @@
 import React from 'react';
-import { useRouter } from 'expo-router';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import SplashScreen from '@/screens/Splash/SplashScreen';
 import { useAuthData } from '@/context/auth';
-import { usePosts, type Post } from '@/hooks/usePosts';
+import { usePosts, type Post } from '@/hooks/posts';
+import { useNavigate } from '@/hooks/useNavigate';
+import { NAVIGATION } from '@/constants/navigation';
 import { styles } from './HomeScreen.styles';
 
+const POSTS_LIMIT = 3;
+
 export default function HomeScreen() {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const { user, isLoading: isLoadingUser } = useAuthData();
-	const { data, isLoading, isError } = usePosts();
+	const { data, isLoading, isError } = usePosts(POSTS_LIMIT);
 
 	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
@@ -52,11 +55,7 @@ export default function HomeScreen() {
 						<View>
 							{(data ?? []).map((item: Post) => (
 								<View key={item.id}>
-									<TouchableOpacity
-										onPress={() => {
-											router.push(`/home/post/${item.id}`);
-										}}
-									>
+									<TouchableOpacity onPress={() => navigate(NAVIGATION.post(`${item.id}`))}>
 										<View style={styles.post}>
 											<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
 											<Text numberOfLines={2}>{item.body}</Text>

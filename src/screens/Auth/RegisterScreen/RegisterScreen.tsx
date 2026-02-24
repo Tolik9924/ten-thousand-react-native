@@ -1,6 +1,5 @@
 import React from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native';
-import { useRouter } from 'expo-router';
 import { Controller, useForm } from 'react-hook-form';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { Button } from '@/components/Button/Button';
@@ -9,6 +8,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useKeyBoardHeight } from '@/hooks/useKeyboardHeight';
 import { validatePassword } from '@/utils/validation';
 import { styles } from './RegisterScreen.styles';
+import { useNavigate } from '@/hooks/useNavigate';
+import { NAVIGATION } from '@/constants/navigation';
+import { PLATFORMS } from '@/constants/platforms';
 
 interface FormData {
 	name: string;
@@ -17,7 +19,7 @@ interface FormData {
 }
 
 const RegisterScreen = () => {
-	const router = useRouter();
+	const navigate = useNavigate();
 	const keyboardHeight = useKeyBoardHeight();
 	const {
 		control,
@@ -27,7 +29,7 @@ const RegisterScreen = () => {
 
 	const onSubmit = (data: FormData) => {
 		Alert.alert('Registered!', JSON.stringify(data));
-		router.push('/auth/login');
+		navigate(NAVIGATION.login);
 	};
 
 	return (
@@ -46,7 +48,7 @@ const RegisterScreen = () => {
 
 				<KeyboardAvoidingView
 					style={styles.scrollAvoidContainer}
-					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+					behavior={Platform.OS === PLATFORMS.ios ? 'padding' : 'height'}
 					keyboardVerticalOffset={0}
 				>
 					<ScrollView keyboardShouldPersistTaps="handled">

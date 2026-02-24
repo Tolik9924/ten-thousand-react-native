@@ -2,10 +2,11 @@ import 'expo-router/entry';
 import AuthScreen from '@/screens/Auth/AuthScreen/AuthScreen';
 import { Redirect } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { checkPin } from '../src/utils/checkPin';
-import { useAuthData } from '../src/context/auth';
+import SplashScreen from '@/screens/Splash/SplashScreen';
+import { checkPin } from '@/utils/checkPin';
+import { useAuthData } from '@/context/auth';
 
-export default function Page() {
+const Page = () => {
 	const [pinExists, setPinExists] = useState<boolean | null>(null);
 	const { isLogIn, isLoading } = useAuthData();
 
@@ -15,11 +16,12 @@ export default function Page() {
 		}
 	}, [isLogIn]);
 
-	// Чекаємо на завантаження auth або на результат checkPin
-	if (isLoading || (isLogIn && pinExists === null)) return null;
+	if (isLoading || (isLogIn && pinExists === null)) return <SplashScreen />;
 
 	if (isLogIn && !pinExists) return <Redirect href="/auth/create-pin-code" />;
 	if (isLogIn && pinExists) return <Redirect href="/auth/pin-code" />;
 
 	return <AuthScreen />;
-}
+};
+
+export default Page;
