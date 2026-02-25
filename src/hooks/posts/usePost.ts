@@ -3,12 +3,13 @@ import api from '@/API';
 import { postsUrl } from '@/constants/env';
 
 export const usePost = (postId: string | string[]) => {
-	const postUrl = `${postsUrl}/${postId}`;
+	const postUrl = `${postsUrl}/posts/${postId}`;
 	return useQuery({
 		queryKey: ['posts', postId],
 		queryFn: async () => {
-			const res = await api.get(postUrl);
-			return res.data;
+			const res = await api.get(`${postUrl}`);
+			const resComments = await api.get(`${postUrl}/comments`);
+			return { ...res.data, comments: [...resComments.data] };
 		},
 		staleTime: 1000 * 60 * 5,
 		gcTime: 1000 * 60 * 60, // ⬅️ cacheTime перейменували!

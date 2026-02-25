@@ -9,6 +9,7 @@ import { NAVIGATION } from '@/constants/navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { styles } from './HomeScreen.styles';
+import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
 
 const POSTS_LIMIT = 3;
 
@@ -19,6 +20,8 @@ export default function HomeScreen() {
 
 	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
+
+	console.log('DATA: ', data);
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -102,14 +105,16 @@ export default function HomeScreen() {
 
 					<View style={styles.postsContainer}>
 						<Text style={styles.postsTitle}>Posts</Text>
-						<View>
+						<View style={styles.post}>
 							{(data ?? []).map((item: Post) => (
 								<View key={item.id}>
 									<TouchableOpacity onPress={() => navigate(NAVIGATION.post(`${item.id}`))}>
-										<View style={styles.post}>
-											<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
-											<Text numberOfLines={2}>{item.body}</Text>
-										</View>
+										<InfoWrapper>
+											<View style={styles.postContainer}>
+												<Text style={styles.postTitle}>{item.title}</Text>
+												<Text style={styles.postInfo}>{item.body}</Text>
+											</View>
+										</InfoWrapper>
 									</TouchableOpacity>
 								</View>
 							))}

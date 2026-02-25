@@ -4,7 +4,7 @@ import { postsUrl } from '@/constants/env';
 import api from '@/API';
 
 export const usePosts = (limit: number) => {
-	const postUrl = `${postsUrl}?_limit=${limit}`;
+	const postUrl = `${postsUrl}/posts?_limit=${limit}`;
 
 	return useQuery<Post[]>({
 		queryKey: ['posts'],

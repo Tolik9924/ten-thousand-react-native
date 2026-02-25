@@ -16,12 +16,16 @@ export default function SearchScreen() {
 
 	const { data, isLoading, isError } = useAllPosts();
 
+	console.log('DATA: ', data);
+
 	if (isLoading) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
 	const filteredPosts: Post[] = data?.filter((post: Post) =>
 		post.title.toLowerCase().includes(query.toLowerCase()),
 	);
+
+	console.log('FILTERED POSTS: ', filteredPosts);
 
 	const debouncedFilteredPosts: Post[] = useDebounce(filteredPosts, 500);
 

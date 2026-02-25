@@ -189,17 +189,34 @@ export const styles = StyleSheet.create({
 	postsContainer: {
 		padding: 20,
 	},
+	post: {
+		display: 'flex',
+		gap: 10,
+	},
+	postContainer: {
+		display: 'flex',
+		gap: 10,
+	},
 	postsTitle: {
 		color: '#606773',
 		fontSize: 15,
 		marginBottom: 10,
 		fontWeight: 400,
 	},
-	post: {
-		backgroundColor: '#fff',
-		padding: 12,
-		boxSizing: 'border-box',
-		marginBottom: 10,
-		borderRadius: 16,
+	postTitle: {
+		fontWeight: '500',
+		fontStyle: 'normal',
+		fontSize: 18,
+		lineHeight: 18,
+		letterSpacing: 0,
+		color: '#171718',
+	},
+	postInfo: {
+		fontWeight: '400',
+		fontStyle: 'normal',
+		fontSize: 16,
+		lineHeight: 16,
+		letterSpacing: 0,
+		color: '#414141',
 	},
 });
