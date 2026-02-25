@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Text, TextInput, TextInputProps, TouchableOpacity, View } from 'react-native';
 
 import { styles } from './Input.styles';
@@ -11,6 +11,7 @@ interface CustomInputProps extends TextInputProps {
 	error?: string;
 	secureText?: boolean;
 	isErrorText?: boolean;
+	Icon?: ReactNode;
 }
 
 const Input: React.FC<CustomInputProps> = ({
@@ -20,6 +21,7 @@ const Input: React.FC<CustomInputProps> = ({
 	error,
 	secureText,
 	isErrorText = true,
+	Icon,
 	...props
 }) => {
 	const [isFocused, setIsFocused] = useState(false);
@@ -40,8 +42,11 @@ const Input: React.FC<CustomInputProps> = ({
 					styles.inputContainer,
 					isFocused && styles.inputFocused,
 					error && styles.inputError,
+					Icon ? styles.iconPadding : undefined,
 				]}
 			>
+				{/*<Ionicons name="search" color="#000" size={24} />*/}
+				{Icon && Icon}
 				<TextInput
 					{...props}
 					style={styles.input}
@@ -66,9 +71,11 @@ const Input: React.FC<CustomInputProps> = ({
 					</TouchableOpacity>
 				)}
 			</View>
-			<View style={styles.errorContainer}>
-				{isErrorText && <Text style={styles.error}>{error}</Text>}
-			</View>
+			{isErrorText && (
+				<View style={styles.errorContainer}>
+					<Text style={styles.error}>{error}</Text>
+				</View>
+			)}
 		</View>
 	);
 };

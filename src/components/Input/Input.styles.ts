@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		borderWidth: 1,
 		borderColor: '#CED5E0',
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		borderRadius: 16,
 		paddingHorizontal: 5,
 		height: 56,
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
 		flex: 1,
 		padding: 5,
 		fontSize: 15,
-		backgroundColor: '#fff',
+		backgroundColor: 'transparent',
 		fontWeight: 400,
 		color: '#06070A',
 	},
@@ -59,5 +59,8 @@ export const styles = StyleSheet.create({
 	},
 	errorContainer: {
 		height: 20,
+	},
+	iconPadding: {
+		paddingHorizontal: 15,
 	},
 });

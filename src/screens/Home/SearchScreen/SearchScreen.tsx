@@ -3,46 +3,58 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
 import SplashScreen from '@/screens/Splash/SplashScreen';
-import { styles } from './SearchScreen.styles';
 import { Post } from './types';
 import { useAllPosts } from '@/hooks/posts/useAllPosts';
 import { useNavigate } from '@/hooks/useNavigate';
 import { NAVIGATION } from '@/constants/navigation';
 import { useDebounce } from '@/hooks/useDebounce';
+import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from './SearchScreen.styles';
 
 export default function SearchScreen() {
 	const [query, setQuery] = useState('');
 	const navigate = useNavigate();
 
 	const { data, isLoading, isError } = useAllPosts();
-
-	console.log('DATA: ', data);
+	const debouncedQuery = useDebounce(query, 500);
 
 	if (isLoading) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
 	const filteredPosts: Post[] = data?.filter((post: Post) =>
-		post.title.toLowerCase().includes(query.toLowerCase()),
+		post.title.toLowerCase().includes(debouncedQuery.toLowerCase()),
 	);
-
-	console.log('FILTERED POSTS: ', filteredPosts);
-
-	const debouncedFilteredPosts: Post[] = useDebounce(filteredPosts, 500);
 
 	return (
 		<View style={styles.page}>
 			<View style={styles.posts}>
-				<Input placeholder="Search posts..." value={query} onChangeText={setQuery} />
+				<Text style={styles.title}>Search</Text>
+				<View style={styles.inputContainer}>
+					<Input
+						Icon={<Ionicons name="search" color="#606773" size={24} />}
+						placeholder="Search Products..."
+						value={query}
+						onChangeText={setQuery}
+						isErrorText={false}
+					/>
+				</View>
 
 				<FlatList
-					data={debouncedFilteredPosts}
-					keyExtractor={(item) => item.id.toString()}
+					style={styles.postsList}
+					data={filteredPosts}
+					keyExtractor={(item: Post) => item.id.toString()}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => navigate(NAVIGATION.post(item.id))}>
-							<View style={styles.post}>
-								<Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
-								<Text numberOfLines={2}>{item.body}</Text>
-							</View>
+						<TouchableOpacity
+							style={styles.postContainer}
+							onPress={() => navigate(NAVIGATION.post(item.id))}
+						>
+							<InfoWrapper>
+								<View style={styles.post}>
+									<Text style={styles.postId}>{item.id}</Text>
+									<Text style={styles.postTitle}>{item.title}</Text>
+								</View>
+							</InfoWrapper>
 						</TouchableOpacity>
 					)}
 				/>

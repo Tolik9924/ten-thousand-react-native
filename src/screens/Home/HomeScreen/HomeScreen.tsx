@@ -21,11 +21,9 @@ export default function HomeScreen() {
 	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
 
-	console.log('DATA: ', data);
-
 	return (
 		<View style={{ flex: 1 }}>
-			<ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+			<ScrollView>
 				<View style={styles.container}>
 					<LinearGradient
 						colors={['#FA8A34', '#FF6F00']}
