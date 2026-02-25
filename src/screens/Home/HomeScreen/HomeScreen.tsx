@@ -57,10 +57,20 @@ export default function HomeScreen() {
 								<View style={styles.rectangle} />
 							</LinearGradient>
 						</View>
-						{/* beforeStart */}
+					</View>
+
+					{/* beforeStart */}
+					<View style={styles.content}>
+						<Text style={styles.beforeStartText}>Before you Start</Text>
+					</View>
+					<ScrollView
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						contentContainerStyle={styles.horizontalMenu}
+					>
 						<View style={styles.beforeStartItems}>
-							<Text style={styles.beforeStartText}>Before you Start</Text>
 							<View style={styles.startItems}>
+								{/* start item */}
 								<View style={styles.startItem}>
 									<View style={styles.titleContainer}>
 										<View style={styles.logoStart}>
@@ -68,32 +78,27 @@ export default function HomeScreen() {
 										</View>
 										<Text style={styles.startTitle}>Link you Bank Account</Text>
 									</View>
+									<View style={styles.stepsContainer}>
+										<Text style={styles.stepsCount}>2 Steps</Text>
+										<MaterialIcons name="arrow-forward" size={24} color="#ffffff" />
+									</View>
+								</View>
+								{/* start item */}
+								<View style={styles.startItem}>
+									<View style={styles.titleContainer}>
+										<View style={styles.logoStart}>
+											<Ionicons name="link-outline" size={16.73} color="#fff" />
+										</View>
+										<Text style={styles.startTitle}>Link you Bank Account</Text>
+									</View>
+									<View style={styles.stepsContainer}>
+										<Text style={styles.stepsCount}>2 Steps</Text>
+										<MaterialIcons name="arrow-forward" size={24} color="#ffffff" />
+									</View>
 								</View>
 							</View>
 						</View>
-					</View>
-
-					<View style={styles.personalAdvisorContainer}>
-						<View style={styles.advice}>
-							<Text style={styles.adviceTitle}>Personal Advisor</Text>
-							<Text style={styles.adviceExplanation}>
-								Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-								Ipsum has been the industrys standard dummy text ever since the 1500s, when an
-								unknown printer took a galley of type and scrambled it to make a type specimen book.
-							</Text>
-						</View>
-					</View>
-
-					<View style={styles.personalAdvisorContainer}>
-						<View style={styles.advice}>
-							<Text style={styles.adviceTitle}>Before you start</Text>
-							<Text style={styles.adviceExplanation}>
-								Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-								Ipsum has been the industrys standard dummy text ever since the 1500s, when an
-								unknown printer took a galley of type and scrambled it to make a type specimen book.
-							</Text>
-						</View>
-					</View>
+					</ScrollView>
 
 					<View style={styles.postsContainer}>
 						<Text style={styles.postsTitle}>Posts</Text>

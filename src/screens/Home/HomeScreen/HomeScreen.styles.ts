@@ -3,9 +3,11 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
 	page: {
 		flex: 1,
+		width: '100%',
 	},
 	container: {
 		width: '100%',
+		display: 'flex',
 	},
 	welcomeContainer: {
 		width: '100%',
@@ -114,11 +116,19 @@ export const styles = StyleSheet.create({
 		borderRadius: 32,
 		borderWidth: 1,
 	},
+	horizontalMenu: {
+		paddingHorizontal: 20,
+		marginTop: 10,
+	},
 	beforeStartItems: {
 		display: 'flex',
 		gap: 10,
 	},
-	startItems: {},
+	startItems: {
+		display: 'flex',
+		flexDirection: 'row',
+		gap: 15,
+	},
 	startItem: {
 		width: 233,
 		height: 152,
@@ -126,6 +136,8 @@ export const styles = StyleSheet.create({
 		backgroundColor: '#636363',
 		padding: 20,
 		boxSizing: 'border-box',
+		display: 'flex',
+		justifyContent: 'space-between',
 	},
 	startTitle: {
 		color: '#fff',
@@ -160,26 +172,18 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		boxSizing: 'border-box',
 	},
-	personalAdvisorContainer: {
-		width: '100%',
-		marginTop: 10,
-		padding: 20,
+	stepsContainer: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 	},
-	advice: {
-		backgroundColor: '#EE6363',
-		width: '100%',
-		height: 200,
-		borderRadius: 15,
-		padding: 12,
-		boxSizing: 'border-box',
-		gap: 10,
-	},
-	adviceTitle: {
-		color: '#fff',
-		fontSize: 20,
-	},
-	adviceExplanation: {
+	stepsCount: {
+		fontWeight: '500',
+		fontStyle: 'normal',
 		fontSize: 15,
+		lineHeight: 24,
+		letterSpacing: 0,
 		color: '#fff',
 	},
 	postsContainer: {
