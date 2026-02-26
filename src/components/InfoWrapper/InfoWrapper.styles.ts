@@ -7,4 +7,8 @@ export const styles = StyleSheet.create({
 		boxSizing: 'border-box',
 		borderRadius: 16,
 	},
+	border: {
+		borderWidth: 1,
+		borderColor: '#CED5E0',
+	},
 });

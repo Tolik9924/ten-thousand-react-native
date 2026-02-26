@@ -1,67 +1,74 @@
 import React from 'react';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { deletePin } from '@/services/storage';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
-import { Button } from '@/components/Button/Button';
-import { Link } from '@/components/Link/Link';
 import { useAuthData } from '@/context/auth';
+import { useNavigate } from '@/hooks/useNavigate';
+import { NAVIGATION } from '@/constants/navigation';
+import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
+import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
 import { styles } from './SettingsScreen.styles';
 
 export default function SettingsScreen() {
-	const { t, i18n } = useTranslation();
-	const router = useRouter();
 	const { user, logout } = useAuthData();
+	const navigate = useNavigate();
 
 	const handleLogout = async () => {
 		await logout();
 		await deletePin();
-		router.push('/auth/login');
-	};
-
-	const changeLanguage = async (lang: string) => {
-		await i18n.changeLanguage(lang);
+		navigate(NAVIGATION.login);
 	};
 
 	return (
 		<View style={styles.page}>
-			<View style={styles.personInfo}>
-				<View style={styles.personInfo}>
-					{user?.image ? (
-						<Image
-							source={{ uri: user?.image }}
-							style={{ width: 100, height: 100, borderRadius: 50 }}
-						/>
-					) : (
-						<View
-							style={{
-								width: 100,
-								height: 100,
-								borderRadius: 50,
-								backgroundColor: '#ccc',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						/>
-					)}
-				</View>
+			<BackNavigate />
+			<View style={styles.settings}>
+				<Text style={styles.titlePage}>Settings</Text>
+				<InfoWrapper isBorder={true}>
+					<View style={styles.nameContainer}>
+						{user?.image ? (
+							<Image source={{ uri: user?.image }} style={styles.ava} />
+						) : (
+							<View style={styles.emptyAva} />
+						)}
+						<Text style={styles.userName}>
+							{user?.firstName} {user?.lastName}
+						</Text>
+					</View>
+				</InfoWrapper>
 
-				<View>
-					<Text style={styles.name}>{`${user?.firstName} ${user?.lastName}`}</Text>
-				</View>
-			</View>
+				<View style={styles.settingItems}>
+					<View style={styles.setting}>
+						<Text style={styles.settingTitle}>Basic</Text>
+						<TouchableOpacity onPress={() => navigate(NAVIGATION.language)}>
+							<InfoWrapper isBorder={true}>
+								<View style={styles.settingContainer}>
+									<View style={styles.titleSettingContainer}>
+										<MaterialIcons name="language" color="#FA8A34" size={24} />
+										<Text style={styles.titleContainer}>Language</Text>
+									</View>
+									<Ionicons name="chevron-forward" size={20} color="#C1C4CB" />
+								</View>
+							</InfoWrapper>
+						</TouchableOpacity>
+					</View>
 
-			<View style={styles.languages}>
-				<Text style={styles.languagesTitle}>{t('language')}: </Text>
-				<View style={styles.changeLanguage}>
-					<Link text="EN" navigate={() => changeLanguage('en')} />
-					<Link text="AR" navigate={() => changeLanguage('ar')} />
+					<View style={styles.setting}>
+						<Text style={styles.settingTitle}>Other</Text>
+						<TouchableOpacity onPress={handleLogout}>
+							<InfoWrapper isBorder={true}>
+								<View style={styles.settingContainer}>
+									<View style={styles.titleSettingContainer}>
+										<Ionicons name="log-out-outline" color="#FA8A34" size={24} />
+										<Text style={styles.titleContainer}>Log Out</Text>
+									</View>
+									<Ionicons name="chevron-forward" size={20} color="#C1C4CB" />
+								</View>
+							</InfoWrapper>
+						</TouchableOpacity>
+					</View>
 				</View>
-			</View>
-
-			<View style={styles.buttonContainer}>
-				<Button title={t('logout')} onPress={handleLogout} />
 			</View>
 			<BottomMenu />
 		</View>

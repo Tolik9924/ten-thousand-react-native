@@ -23,30 +23,51 @@ const MENU = [
 	},
 ] as const;
 
+const ROUTE_GROUP_MAP: Record<string, string> = {
+	'/home/language': '/home/settings',
+};
+
+const resolvePathname = (pathname: string): string => {
+	return ROUTE_GROUP_MAP[pathname] ?? pathname;
+};
+
+const isActiveRoute = (itemNavigate: string, pathname: string): boolean => {
+	const resolved = resolvePathname(pathname);
+	return resolved === itemNavigate || resolved.startsWith(itemNavigate + '/');
+};
+
+const getActiveNavigate = (pathname: string): string => {
+	return (
+		MENU.filter((item) => isActiveRoute(item.navigate, pathname)).sort(
+			(a, b) => b.navigate.length - a.navigate.length,
+		)[0]?.navigate ?? ''
+	);
+};
+
 export const BottomMenu = () => {
 	const pathname = usePathname();
 	const router = useRouter();
 
 	const { t } = useTranslation();
 
+	const activeNavigate = getActiveNavigate(pathname);
+
 	return (
 		<View style={styles.container}>
-			{MENU.map((item) => (
-				<TouchableOpacity
-					style={styles.item}
-					key={item.name}
-					onPress={() => router.push(item.navigate)}
-				>
-					<Ionicons
-						name={item.iconName}
-						size={28}
-						color={item.navigate === pathname ? '#FA8A34' : '#858C94'}
-					/>
-					<Text style={[styles.menuText, pathname === item.navigate && styles.routeText]}>
-						{t(item.name)}
-					</Text>
-				</TouchableOpacity>
-			))}
+			{MENU.map((item) => {
+				const isActive = item.navigate === activeNavigate;
+
+				return (
+					<TouchableOpacity
+						style={styles.item}
+						key={item.name}
+						onPress={() => router.push(item.navigate)}
+					>
+						<Ionicons name={item.iconName} size={28} color={isActive ? '#FA8A34' : '#858C94'} />
+						<Text style={[styles.menuText, isActive && styles.routeText]}>{t(item.name)}</Text>
+					</TouchableOpacity>
+				);
+			})}
 		</View>
 	);
 };
