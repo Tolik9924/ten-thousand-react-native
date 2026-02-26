@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import * as LocalAuthentication from 'expo-local-authentication';
-import React, { useEffect, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, Image, Pressable, Text, View } from 'react-native';
 import { getPin, savePin } from '@/services/storage';
 import { NumberKey } from './constants';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
@@ -10,17 +10,30 @@ import { Dots } from './components/Dots/Dots';
 import { useNavigate } from '@/hooks/useNavigate';
 import { Keyboard } from './components/Keyboard/Keyboard';
 import { NAVIGATION } from '@/constants/navigation';
+import { useAuthData } from '@/context/auth';
 import { styles } from './PinCode.styles';
 
-const PinCodeScreen = ({ isNewCode = false }: { isNewCode?: boolean }) => {
+const PinCodeScreen = ({
+	isNewCode = false,
+	isAuth = false,
+}: {
+	isNewCode?: boolean;
+	isAuth?: boolean;
+}) => {
 	const [pin, setPin] = useState('');
 	const navigate = useNavigate();
+	const { user, logout } = useAuthData();
 
 	useEffect(() => {
 		if (!isNewCode) {
 			void authentication();
 		}
 	}, []);
+
+	const redirectToRegister = async () => {
+		await logout();
+		navigate(NAVIGATION.register);
+	};
 
 	const authentication = async () => {
 		try {
@@ -79,13 +92,38 @@ const PinCodeScreen = ({ isNewCode = false }: { isNewCode?: boolean }) => {
 			<View style={styles.container}>
 				<View style={styles.infoContainer}>
 					<View style={styles.titleContainer}>
-						<View style={styles.titleSvg}>
-							<Ionicons name="phone-portrait-outline" size={24} color="#00A36D" />
-						</View>
-						<Text style={styles.title}>{isNewCode ? 'Create a Pin code' : 'Enter a pin code'}</Text>
+						{!isAuth && (
+							<View style={styles.titleSvg}>
+								<Ionicons name="phone-portrait-outline" size={24} color="#00A36D" />
+							</View>
+						)}
+						{isAuth && (
+							<>
+								{user?.image ? (
+									<Image source={{ uri: user?.image }} style={styles.ava} />
+								) : (
+									<View style={styles.titleSvg}>
+										<Ionicons name="person-outline" size={24} color="#00A36D" />
+									</View>
+								)}
+							</>
+						)}
+						{!isAuth && (
+							<Text style={styles.title}>
+								{isNewCode ? 'Create a Pin code' : 'Enter a pin code'}
+							</Text>
+						)}
+						{isAuth && (
+							<View style={styles.authInfo}>
+								<Text style={styles.email}>{user?.email}</Text>
+								<Pressable onPress={redirectToRegister}>
+									<Text style={styles.changeAccount}>Change Account</Text>
+								</Pressable>
+							</View>
+						)}
 					</View>
 					<View style={styles.pinCodeContainer}>
-						<Text style={styles.explainText}>enter 5 digit code: </Text>
+						<Text style={styles.explainText}>Enter 5 digit code: </Text>
 						<Dots pin={pin} />
 					</View>
 				</View>

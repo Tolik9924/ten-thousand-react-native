@@ -18,8 +18,8 @@ const Page = () => {
 
 	if (isLoading || (isLogIn && pinExists === null)) return <SplashScreen />;
 
-	if (isLogIn && !pinExists) return <Redirect href="/auth/create-pin-code" />;
-	if (isLogIn && pinExists) return <Redirect href="/auth/pin-code" />;
+	if (isLogIn && !pinExists) return <Redirect href="/auth/create-pin-code?isAuth=false" />;
+	if (isLogIn && pinExists) return <Redirect href="/auth/pin-code?isAuth=true" />;
 
 	return <AuthScreen />;
 };

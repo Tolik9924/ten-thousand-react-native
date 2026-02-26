@@ -16,5 +16,12 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true
 	},
-	"include": ["src", "declarations.d.ts", "jest.setup.js", ".expo/types/**/*.ts", "expo-env.d.ts", "metro.config.js"]
+	"include": [
+		"src",
+		"declarations.d.ts",
+		"jest.setup.js",
+		".expo/types/**/*.ts",
+		"expo-env.d.ts",
+		"metro.config.js"
+	]
 }

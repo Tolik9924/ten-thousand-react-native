@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
 import SplashScreen from '@/screens/Splash/SplashScreen';
@@ -11,6 +11,7 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './SearchScreen.styles';
+import { PaginatedList } from '@/components/PaginatedList';
 
 export default function SearchScreen() {
 	const [query, setQuery] = useState('');
@@ -40,10 +41,8 @@ export default function SearchScreen() {
 					/>
 				</View>
 
-				<FlatList
-					style={styles.postsList}
+				<PaginatedList
 					data={filteredPosts}
-					keyExtractor={(item: Post) => item.id.toString()}
 					renderItem={({ item }) => (
 						<TouchableOpacity
 							style={styles.postContainer}
@@ -57,6 +56,7 @@ export default function SearchScreen() {
 							</InfoWrapper>
 						</TouchableOpacity>
 					)}
+					keyExtractor={(item) => item.id.toString()}
 				/>
 			</View>
 			<BottomMenu />
