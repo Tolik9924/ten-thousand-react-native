@@ -7,11 +7,17 @@ import { usePosts, type Post } from '@/hooks/posts';
 import { useNavigate } from '@/hooks/useNavigate';
 import { NAVIGATION } from '@/constants/navigation';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { styles } from './HomeScreen.styles';
 import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
+import { BeforeStart } from '@/screens/Home/HomeScreen/components/BeforeStart';
+import { VARIANT } from '@/screens/Home/HomeScreen/constants';
 
 const POSTS_LIMIT = 3;
+const START_ITEMS = [
+	{ title: 'Link you Bank Account', steps: 2, variant: VARIANT.primary },
+	{ title: 'Lorem Ipsum', steps: 3, variant: VARIANT.secondary },
+] as const;
 
 export default function HomeScreen() {
 	const navigate = useNavigate();
@@ -71,32 +77,14 @@ export default function HomeScreen() {
 					>
 						<View style={styles.beforeStartItems}>
 							<View style={styles.startItems}>
-								{/* start item */}
-								<View style={styles.startItem}>
-									<View style={styles.titleContainer}>
-										<View style={styles.logoStart}>
-											<Ionicons name="link-outline" size={16.73} color="#fff" />
-										</View>
-										<Text style={styles.startTitle}>Link you Bank Account</Text>
-									</View>
-									<View style={styles.stepsContainer}>
-										<Text style={styles.stepsCount}>2 Steps</Text>
-										<MaterialIcons name="arrow-forward" size={24} color="#ffffff" />
-									</View>
-								</View>
-								{/* start item */}
-								<View style={styles.startItem}>
-									<View style={styles.titleContainer}>
-										<View style={styles.logoStart}>
-											<Ionicons name="link-outline" size={16.73} color="#fff" />
-										</View>
-										<Text style={styles.startTitle}>Link you Bank Account</Text>
-									</View>
-									<View style={styles.stepsContainer}>
-										<Text style={styles.stepsCount}>2 Steps</Text>
-										<MaterialIcons name="arrow-forward" size={24} color="#ffffff" />
-									</View>
-								</View>
+								{START_ITEMS.map((item, i) => (
+									<BeforeStart
+										key={i}
+										title={item.title}
+										stepsCount={item.steps}
+										variant={item.variant}
+									/>
+								))}
 							</View>
 						</View>
 					</ScrollView>
