@@ -1,15 +1,18 @@
 export type Comment = {
-	postId: string;
-	id: string;
+	postId: number;
+	id: number;
 	name: string;
 	email: string;
 	body: string;
 };
 
 export type Post = {
-	id: string;
-	body: string;
+	id: number;
+	userId: number;
 	title: string;
-	userId: string;
+	body: string;
+};
+
+export type PostWithComments = Post & {
 	comments: Comment[];
 };

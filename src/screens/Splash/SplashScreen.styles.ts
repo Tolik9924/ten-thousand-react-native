@@ -1,13 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-	wrapper: {
+	container: {
+		flex: 1,
 		backgroundColor: '#fff',
-		padding: 12,
-		borderRadius: 16,
-	},
-	border: {
-		borderWidth: 1,
-		borderColor: '#CED5E0',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });

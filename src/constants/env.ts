@@ -10,4 +10,3 @@ const extra = (Constants.expoConfig?.extra ?? {}) as AppExtra;
 
 export const apiUrl: string = extra.apiUrl ?? '';
 export const postsUrl: string = extra.postsUrl ?? '';
-//export const appEnv: string = extra.appEnv ?? 'development';

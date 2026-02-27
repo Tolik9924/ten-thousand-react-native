@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	circleItems: {
-		display: 'flex',
 		flexDirection: 'row',
 		position: 'relative',
 		gap: 10,
@@ -12,7 +11,6 @@ export const styles = StyleSheet.create({
 	circleItem: {
 		width: 48,
 		height: 48,
-		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},

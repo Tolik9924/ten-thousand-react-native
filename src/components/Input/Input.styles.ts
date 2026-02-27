@@ -2,11 +2,9 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
-		display: 'flex',
 		gap: 5,
 	},
 	inputContainer: {
-		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
 		borderWidth: 1,
@@ -17,20 +15,19 @@ export const styles = StyleSheet.create({
 		height: 56,
 	},
 	labelsContainer: {
-		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
 	label: {
 		color: '#606773',
-		fontWeight: 400,
+		fontWeight: '400',
 		fontSize: 15,
 		lineHeight: 24,
 		paddingHorizontal: 10,
 	},
 	labelForgot: {
 		color: '#FA8A34',
-		fontWeight: 400,
+		fontWeight: '400',
 		fontSize: 15,
 		lineHeight: 24,
 		paddingHorizontal: 10,
@@ -40,7 +37,7 @@ export const styles = StyleSheet.create({
 		padding: 5,
 		fontSize: 15,
 		backgroundColor: 'transparent',
-		fontWeight: 400,
+		fontWeight: '400',
 		color: '#06070A',
 	},
 	inputFocused: {

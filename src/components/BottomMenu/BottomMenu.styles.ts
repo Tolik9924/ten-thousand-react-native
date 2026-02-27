@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 	},
 	menuText: {
-		fontWeight: 400,
+		fontWeight: '400',
 		fontSize: 10,
 		color: '#858C94',
 	},

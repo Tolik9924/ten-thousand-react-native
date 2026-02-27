@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { usePathname, useRouter } from 'expo-router';
+import { useMemo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
@@ -27,30 +28,30 @@ const ROUTE_GROUP_MAP: Record<string, string> = {
 	'/home/language': '/home/settings',
 };
 
-const resolvePathname = (pathname: string): string => {
-	return ROUTE_GROUP_MAP[pathname] ?? pathname;
-};
-
-const isActiveRoute = (itemNavigate: string, pathname: string): boolean => {
-	const resolved = resolvePathname(pathname);
-	return resolved === itemNavigate || resolved.startsWith(itemNavigate + '/');
-};
-
-const getActiveNavigate = (pathname: string): string => {
-	return (
-		MENU.filter((item) => isActiveRoute(item.navigate, pathname)).sort(
-			(a, b) => b.navigate.length - a.navigate.length,
-		)[0]?.navigate ?? ''
-	);
-};
-
 export const BottomMenu = () => {
 	const pathname = usePathname();
 	const router = useRouter();
 
 	const { t } = useTranslation();
 
-	const activeNavigate = getActiveNavigate(pathname);
+	const resolvePathname = (pathname: string): string => {
+		return ROUTE_GROUP_MAP[pathname] ?? pathname;
+	};
+
+	const isActiveRoute = (itemNavigate: string, pathname: string): boolean => {
+		const resolved = resolvePathname(pathname);
+		return resolved === itemNavigate || resolved.startsWith(itemNavigate + '/');
+	};
+
+	const getActiveNavigate = (pathname: string): string => {
+		return (
+			[...MENU]
+				.filter((item) => isActiveRoute(item.navigate, pathname))
+				.sort((a, b) => b.navigate.length - a.navigate.length)[0]?.navigate ?? ''
+		);
+	};
+
+	const activeNavigate = useMemo(() => getActiveNavigate(pathname), [pathname]);
 
 	return (
 		<View style={styles.container}>

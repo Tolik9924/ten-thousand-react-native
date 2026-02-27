@@ -45,7 +45,6 @@ const Input: React.FC<CustomInputProps> = ({
 					Icon ? styles.iconPadding : undefined,
 				]}
 			>
-				{/*<Ionicons name="search" color="#000" size={24} />*/}
 				{Icon && Icon}
 				<TextInput
 					{...props}
@@ -65,10 +64,8 @@ const Input: React.FC<CustomInputProps> = ({
 						/>
 					</TouchableOpacity>
 				)}
-				{error && (
-					<TouchableOpacity style={styles.showPassword} onPress={togglePasswordVisibility}>
-						<Ionicons name="information-circle" size={24} color="#D63C41" />
-					</TouchableOpacity>
+				{error && !secureText && (
+					<Ionicons name="information-circle" size={24} color="#D63C41" style={styles.showPassword} />
 				)}
 			</View>
 			{isErrorText && (

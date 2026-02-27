@@ -5,6 +5,6 @@ export const styles = StyleSheet.create({
 		fontSize: 15,
 		lineHeight: 24,
 		color: '#FA8A34',
-		fontWeight: 600,
+		fontWeight: '600',
 	},
 });

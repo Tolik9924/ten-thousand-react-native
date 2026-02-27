@@ -1,6 +1,1 @@
-export type Post = {
-	id: string;
-	title: string;
-	userId: string;
-	body: string;
-};
+export type { Post } from '@/types/posts';

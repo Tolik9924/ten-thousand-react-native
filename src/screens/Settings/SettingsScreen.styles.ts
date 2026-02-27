@@ -28,19 +28,16 @@ export const styles = StyleSheet.create({
 	nameContainer: {
 		paddingHorizontal: 10,
 		paddingVertical: 15,
-		display: 'flex',
 		flexDirection: 'row',
 		gap: 10,
 		alignItems: 'center',
 	},
 	settingContainer: {
-		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	titleSettingContainer: {
-		display: 'flex',
 		gap: 10,
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -56,7 +53,6 @@ export const styles = StyleSheet.create({
 		gap: 20,
 	},
 	setting: {
-		display: 'flex',
 		gap: 10,
 	},
 	settingTitle: {
@@ -80,34 +76,5 @@ export const styles = StyleSheet.create({
 		fontSize: 22,
 		lineHeight: 32,
 		letterSpacing: 0,
-	},
-	personInfo: {
-		display: 'flex',
-		alignItems: 'center',
-		gap: 20,
-		marginTop: 15,
-	},
-	name: {
-		fontSize: 20,
-	},
-	languages: {
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: 20,
-	},
-	languagesTitle: {
-		fontSize: 20,
-	},
-	changeLanguage: {
-		marginTop: 10,
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		gap: 70,
-	},
-	buttonContainer: {
-		width: '100%',
-		padding: 20,
-		marginTop: 100,
 	},
 });

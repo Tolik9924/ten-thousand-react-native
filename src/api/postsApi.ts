@@ -1,11 +1,7 @@
 import { postsApi } from './axiosInstance';
+import type { Post } from '@/types/posts';
 
-export type Post = {
-	userId: number;
-	id: number;
-	title: string;
-	body: string;
-};
+export type { Post };
 
 export const fetchPosts = async (limit?: number): Promise<Post[]> => {
 	const res = await postsApi.get<Post[]>('/posts', {

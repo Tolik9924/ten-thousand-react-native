@@ -10,7 +10,6 @@ type Props = {
 	disabled?: boolean;
 	style?: ViewStyle;
 	textStyle?: TextStyle;
-	variant?: 'primary' | 'secondary';
 };
 
 export const Button = ({ title, onPress, disabled = false, style, textStyle }: Props) => {

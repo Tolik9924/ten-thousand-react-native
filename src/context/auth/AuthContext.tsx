@@ -33,7 +33,9 @@ export const AuthProvider = ({ children }: UserProvider) => {
 	const [localUser, setLocalUser] = useState<UserData | null>(null);
 
 	useEffect(() => {
-		getRefreshToken().then((token) => setHasToken(!!token));
+		getRefreshToken()
+			.then((token) => setHasToken(!!token))
+			.catch(() => setHasToken(false));
 	}, []);
 
 	const { data: queryUser, isLoading, refetch } = useAuth(hasToken);

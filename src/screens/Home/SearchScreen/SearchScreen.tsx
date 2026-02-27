@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
 import Input from '@/components/Input/Input';
@@ -20,12 +20,16 @@ export default function SearchScreen() {
 	const { data, isLoading, isError } = useAllPosts();
 	const debouncedQuery = useDebounce(query, 500);
 
+	const filteredPosts: Post[] = useMemo(
+		() =>
+			(data ?? []).filter((post: Post) =>
+				post.title.toLowerCase().includes(debouncedQuery.toLowerCase()),
+			),
+		[data, debouncedQuery],
+	);
+
 	if (isLoading) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
-
-	const filteredPosts: Post[] = data?.filter((post: Post) =>
-		post.title.toLowerCase().includes(debouncedQuery.toLowerCase()),
-	);
 
 	return (
 		<View style={styles.page}>
@@ -46,7 +50,7 @@ export default function SearchScreen() {
 					renderItem={({ item }) => (
 						<TouchableOpacity
 							style={styles.postContainer}
-							onPress={() => navigate(NAVIGATION.post(item.id))}
+							onPress={() => navigate(NAVIGATION.post(item.id.toString()))}
 						>
 							<InfoWrapper>
 								<View style={styles.post}>

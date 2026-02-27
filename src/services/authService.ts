@@ -25,6 +25,11 @@ export type AuthResponse = {
 	refreshToken: string;
 };
 
+type StoredTokens = {
+	accessToken: string;
+	refreshToken: string;
+};
+
 // 💾 SAVE TOKENS (secure storage)
 export const saveTokens = async (accessToken: string, refreshToken: string) => {
 	const tokens = JSON.stringify({ accessToken, refreshToken });
@@ -46,30 +51,26 @@ export const clearTokens = async () => {
 	}
 };
 
-// 📥 GET ACCESS TOKEN
-export const getAccessToken = async (): Promise<string | null> => {
+// Internal helper — reads and parses tokens from the appropriate store
+const getTokens = async (): Promise<StoredTokens | null> => {
 	if (Platform.OS === PLATFORMS.ios) {
 		const credentials = await Keychain.getGenericPassword();
 		if (!credentials) return null;
-		return JSON.parse(credentials.password).accessToken;
-	} else {
-		const tokens = await SecureStore.getItemAsync(AUTH);
-		if (!tokens) return null;
-		return JSON.parse(tokens).accessToken;
+		return JSON.parse(credentials.password);
 	}
+	const tokens = await SecureStore.getItemAsync(AUTH);
+	if (!tokens) return null;
+	return JSON.parse(tokens);
+};
+
+// 📥 GET ACCESS TOKEN
+export const getAccessToken = async (): Promise<string | null> => {
+	return (await getTokens())?.accessToken ?? null;
 };
 
 // 📥 GET REFRESH TOKEN
 export const getRefreshToken = async (): Promise<string | null> => {
-	if (Platform.OS === PLATFORMS.ios) {
-		const credentials = await Keychain.getGenericPassword();
-		if (!credentials) return null;
-		return JSON.parse(credentials.password).refreshToken;
-	} else {
-		const tokens = await SecureStore.getItemAsync(AUTH);
-		if (!tokens) return null;
-		return JSON.parse(tokens).refreshToken;
-	}
+	return (await getTokens())?.refreshToken ?? null;
 };
 
 // 🔐 LOGIN (public endpoint — raw axios, no auth header needed)

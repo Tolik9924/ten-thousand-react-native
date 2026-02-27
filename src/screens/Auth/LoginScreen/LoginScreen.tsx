@@ -20,8 +20,6 @@ interface FormData {
 	password: string;
 }
 
-// name emilys
-// password emilyspass
 
 const LoginScreen = () => {
 	const [error, setError] = useState('');
@@ -50,7 +48,7 @@ const LoginScreen = () => {
 						<Ionicons name="person-add-outline" size={24} color="#00A385" />
 					</View>
 					<View style={styles.headerText}>
-						<Text style={styles.title}>Sign up</Text>
+						<Text style={styles.title}>Sign in</Text>
 						<Text style={styles.subTitle}>Personal Account</Text>
 					</View>
 				</View>
