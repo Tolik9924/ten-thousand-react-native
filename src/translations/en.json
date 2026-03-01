@@ -6,5 +6,18 @@
 	"addPhoto": "Add Photo",
 	"name": "Name",
 	"language": "Language",
-	"logout": "Logout"
+	"logout": "Logout",
+	"basic": "Basic",
+	"other": "Other",
+	"yourName": "Your name",
+	"testTask": "Test task",
+	"goToCall": "Go to call",
+	"beforeYouStart": "Before you Start",
+	"posts": "Posts",
+	"login": "Login",
+	"createAccount": "Create account",
+	"personalAccount": "Personal Account",
+	"signIn": "Sign in",
+	"username": "Username",
+	"password": "Password"
 }

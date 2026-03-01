@@ -6,5 +6,18 @@
 	"addPhoto": "أضف صورة",
 	"name": "الاسم",
 	"language": "اللغة",
-	"logout": "تسجيل الخروج"
+	"logout": "تسجيل الخروج",
+	"basic": "أساسي",
+	"other": "آخر",
+	"yourName": "اسمك",
+	"testTask": "مهمة الاختبار",
+	"goToCall": "انتقل إلى الاتصال",
+	"beforeYouStart": "قبل أن تبدأ",
+	"posts": "دعامات",
+	"login": "تسجيل الدخول",
+	"createAccount": "إنشاء حساب",
+	"personalAccount": "حساب شخصي",
+	"signIn": "تسجيل الدخول",
+	"username": "اسم المستخدم",
+	"password": "كلمة المرور"
 }

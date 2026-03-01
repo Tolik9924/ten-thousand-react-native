@@ -1,17 +1,18 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { BottomMenu } from '@/components/BottomMenu/BottomMenu';
+import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
 import SplashScreen from '@/screens/Splash/SplashScreen';
+import { VARIANT } from '@/screens/Home/HomeScreen/constants';
+import { BeforeStart } from '@/screens/Home/HomeScreen/components/BeforeStart';
 import { useAuthData } from '@/context/auth';
 import { usePosts, type Post } from '@/hooks/posts';
 import { useNavigate } from '@/hooks/useNavigate';
 import { NAVIGATION } from '@/constants/navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { styles } from './HomeScreen.styles';
-import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
-import { BeforeStart } from '@/screens/Home/HomeScreen/components/BeforeStart';
-import { VARIANT } from '@/screens/Home/HomeScreen/constants';
 
 const POSTS_LIMIT = 3;
 const START_ITEMS = [
@@ -23,6 +24,7 @@ export default function HomeScreen() {
 	const navigate = useNavigate();
 	const { user, isLoading: isLoadingUser, isLogIn } = useAuthData();
 	const { data, isLoading, isError } = usePosts(POSTS_LIMIT);
+	const { t } = useTranslation();
 
 	if (isLoading || isLoadingUser) return <SplashScreen />;
 	if (isError) return <Text style={{ padding: 20 }}>Error loading posts</Text>;
@@ -37,7 +39,7 @@ export default function HomeScreen() {
 						end={{ x: 0, y: 0.9 }}
 						style={styles.welcomeContainer}
 					>
-						<Text style={styles.yourName}>Your name</Text>
+						<Text style={styles.yourName}>{t('yourName')}</Text>
 						<Text style={styles.welcomeText}>
 							{isLogIn ? `${user?.firstName} ${user?.lastName}` : 'User'}!
 						</Text>
@@ -47,11 +49,11 @@ export default function HomeScreen() {
 						<View style={styles.testTask}>
 							<View style={styles.taskInfo}>
 								<View style={styles.infoLinks}>
-									<Text style={styles.taskTitle}>Test task</Text>
+									<Text style={styles.taskTitle}>{t('testTask')}</Text>
 									<Text style={styles.taskSubTitle}>Lorem ipsum</Text>
 								</View>
 								<View style={styles.goCallContainer}>
-									<Text style={styles.callText}>Go to call</Text>
+									<Text style={styles.callText}>{t('goToCall')}</Text>
 									<MaterialIcons name="chevron-right" size={24} color="#009E81" />
 								</View>
 							</View>
@@ -68,7 +70,7 @@ export default function HomeScreen() {
 
 					{/* beforeStart */}
 					<View style={styles.content}>
-						<Text style={styles.beforeStartText}>Before you Start</Text>
+						<Text style={styles.beforeStartText}>{t('beforeYouStart')}</Text>
 					</View>
 					<ScrollView
 						horizontal
@@ -90,7 +92,7 @@ export default function HomeScreen() {
 					</ScrollView>
 
 					<View style={styles.postsContainer}>
-						<Text style={styles.postsTitle}>Posts</Text>
+						<Text style={styles.postsTitle}>{t('posts')}</Text>
 						<View style={styles.post}>
 							{(data ?? []).map((item: Post) => (
 								<View key={item.id}>

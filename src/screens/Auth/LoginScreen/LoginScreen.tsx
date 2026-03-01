@@ -14,12 +14,12 @@ import { FORM_ERROR } from '@/screens/Auth/LoginScreen/constants';
 import { useNavigate } from '@/hooks/useNavigate';
 import { styles } from './LoginScreen.styles';
 import { PLATFORMS } from '@/constants/platforms';
+import { useTranslation } from 'react-i18next';
 
 interface FormData {
 	username: string;
 	password: string;
 }
-
 
 const LoginScreen = () => {
 	const [error, setError] = useState('');
@@ -27,6 +27,7 @@ const LoginScreen = () => {
 	const { control, handleSubmit } = useForm<FormData>();
 	const keyboardHeight = useKeyBoardHeight();
 	const { login: setUser } = useAuthData();
+	const { t } = useTranslation();
 
 	const onSubmit = async (data: FormData) => {
 		try {
@@ -48,8 +49,8 @@ const LoginScreen = () => {
 						<Ionicons name="person-add-outline" size={24} color="#00A385" />
 					</View>
 					<View style={styles.headerText}>
-						<Text style={styles.title}>Sign in</Text>
-						<Text style={styles.subTitle}>Personal Account</Text>
+						<Text style={styles.title}>{t('signIn')}</Text>
+						<Text style={styles.subTitle}>{t('personalAccount')}</Text>
 					</View>
 				</View>
 
@@ -71,8 +72,8 @@ const LoginScreen = () => {
 										rules={{ required: 'Username required' }}
 										render={({ field: { onChange, value } }) => (
 											<Input
-												label="Username"
-												placeholder="Username"
+												label={t('username')}
+												placeholder={t('username')}
 												value={value}
 												onChangeText={onChange}
 												isErrorText={false}
@@ -88,8 +89,8 @@ const LoginScreen = () => {
 										rules={{ required: 'Password required' }}
 										render={({ field: { onChange, value } }) => (
 											<Input
-												label="Password"
-												placeholder="Password"
+												label={t('password')}
+												placeholder={t('password')}
 												value={value}
 												onChangeText={onChange}
 												secureText={true}
@@ -105,9 +106,9 @@ const LoginScreen = () => {
 				</KeyboardAvoidingView>
 
 				<View style={[styles.submitButton, { bottom: keyboardHeight + 120 }]}>
-					<Button title="Login" onPress={handleSubmit(onSubmit)} />
+					<Button title={t('login')} onPress={handleSubmit(onSubmit)} />
 					{keyboardHeight === 0 && (
-						<Link text="Create account" navigate={() => navigate(NAVIGATION.register)} />
+						<Link text={t('createAccount')} navigate={() => navigate(NAVIGATION.register)} />
 					)}
 				</View>
 			</View>

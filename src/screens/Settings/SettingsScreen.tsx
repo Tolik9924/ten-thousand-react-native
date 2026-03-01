@@ -9,10 +9,12 @@ import { NAVIGATION } from '@/constants/navigation';
 import { BackNavigate } from '@/components/BackNavigate/BackNavigate';
 import { InfoWrapper } from '@/components/InfoWrapper/InfoWrapper';
 import { styles } from './SettingsScreen.styles';
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsScreen() {
 	const { user, logout } = useAuthData();
 	const navigate = useNavigate();
+	const { t } = useTranslation();
 
 	const handleLogout = async () => {
 		await logout();
@@ -24,7 +26,7 @@ export default function SettingsScreen() {
 		<View style={styles.page}>
 			<BackNavigate />
 			<View style={styles.settings}>
-				<Text style={styles.titlePage}>Settings</Text>
+				<Text style={styles.titlePage}>{t('settings')}</Text>
 				<InfoWrapper isBorder={true}>
 					<View style={styles.nameContainer}>
 						{user?.image ? (
@@ -40,13 +42,13 @@ export default function SettingsScreen() {
 
 				<View style={styles.settingItems}>
 					<View style={styles.setting}>
-						<Text style={styles.settingTitle}>Basic</Text>
+						<Text style={styles.settingTitle}>{t('basic')}</Text>
 						<TouchableOpacity onPress={() => navigate(NAVIGATION.language)}>
 							<InfoWrapper isBorder={true}>
 								<View style={styles.settingContainer}>
 									<View style={styles.titleSettingContainer}>
 										<MaterialIcons name="language" color="#FA8A34" size={24} />
-										<Text style={styles.titleContainer}>Language</Text>
+										<Text style={styles.titleContainer}>{t('language')}</Text>
 									</View>
 									<Ionicons name="chevron-forward" size={20} color="#C1C4CB" />
 								</View>
@@ -55,13 +57,13 @@ export default function SettingsScreen() {
 					</View>
 
 					<View style={styles.setting}>
-						<Text style={styles.settingTitle}>Other</Text>
+						<Text style={styles.settingTitle}>{t('other')}</Text>
 						<TouchableOpacity onPress={handleLogout}>
 							<InfoWrapper isBorder={true}>
 								<View style={styles.settingContainer}>
 									<View style={styles.titleSettingContainer}>
 										<Ionicons name="log-out-outline" color="#FA8A34" size={24} />
-										<Text style={styles.titleContainer}>Log Out</Text>
+										<Text style={styles.titleContainer}>{t('logout')}</Text>
 									</View>
 									<Ionicons name="chevron-forward" size={20} color="#C1C4CB" />
 								</View>
