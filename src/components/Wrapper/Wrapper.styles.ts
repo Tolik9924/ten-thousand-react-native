@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	wrapper: {
-		width: 148,
+		width: 164,
 		height: 136,
 		backgroundColor: '#fff',
 		borderRadius: 16,

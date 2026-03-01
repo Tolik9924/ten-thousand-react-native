@@ -1,7 +1,7 @@
 import Svg, { Path } from 'react-native-svg';
 
-export const LogoSVG = () => (
-	<Svg width={62} height={82} viewBox="0 0 62 82" fill="none">
+export const LogoSVG = ({ width = 82, height = 82 }: { width?: number; height?: number }) => (
+	<Svg width={width} height={height} viewBox="0 0 62 82" fill="none">
 		<Path
 			d="M61.0277 32.7981C62.3008 24.2256 55.8211 
       19.6172 46.961 16.543L49.8351 4.93048L42.8177 

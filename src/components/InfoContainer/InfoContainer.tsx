@@ -1,22 +1,34 @@
-import { CraneSVG } from '@/assets/CraneSvg';
-import { HomeSVG } from '@/assets/HomeSvg';
-import { WorkBuildingSvg } from '@/assets/WorkBuildingSvg';
+import React, { ReactNode } from 'react';
 import { Text, View } from 'react-native';
 import { Wrapper } from '../Wrapper/Wrapper';
 import { styles } from './InfoContainer.styles';
 
-export const InfoContainer = () => {
+export const InfoContainer = ({
+	firstIcon,
+	secondIcon,
+	thirdIcon,
+	title,
+	backgroundColors,
+}: {
+	firstIcon: ReactNode;
+	secondIcon: ReactNode;
+	thirdIcon: ReactNode;
+	title: string;
+	backgroundColors: string[];
+}) => {
 	return (
 		<Wrapper>
 			<View style={styles.circleItems}>
-				<View style={[styles.circleItem, { backgroundColor: '#77CDD9', borderRadius: 50 }]}>
-					<CraneSVG />
+				<View
+					style={[styles.circleItem, { backgroundColor: backgroundColors[0], borderRadius: 50 }]}
+				>
+					{firstIcon}
 				</View>
 				<View
 					style={[
 						styles.circleItem,
 						{
-							backgroundColor: '#5AA5FA',
+							backgroundColor: backgroundColors[1],
 							borderRadius: 50,
 							position: 'absolute',
 							margin: 'auto',
@@ -24,13 +36,15 @@ export const InfoContainer = () => {
 						},
 					]}
 				>
-					<WorkBuildingSvg />
+					{secondIcon}
 				</View>
-				<View style={[styles.circleItem, { backgroundColor: '#565ED1', borderRadius: 50 }]}>
-					<HomeSVG />
+				<View
+					style={[styles.circleItem, { backgroundColor: backgroundColors[2], borderRadius: 50 }]}
+				>
+					{thirdIcon}
 				</View>
 			</View>
-			<Text style={styles.description}>Crowd real estate</Text>
+			<Text style={styles.description}>{title}</Text>
 		</Wrapper>
 	);
 };

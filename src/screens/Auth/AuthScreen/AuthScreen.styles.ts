@@ -2,15 +2,16 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		width: '100%',
-		height: '95%',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		padding: 24,
-		marginTop: 25,
+		paddingTop: 49,
 	},
 	content: {
 		flexDirection: 'row',
+		justifyContent: 'center',
 		gap: 15,
 		width: '100%',
 		flexWrap: 'wrap',
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create({
 		gap: 15,
 	},
 	logoContainer: {
-		width: 148,
+		width: 164,
 		height: 136,
 		backgroundColor: '#FA8A34',
 		borderRadius: 16,
